@@ -1,0 +1,1721 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>每日大赛app在线观看yandex - 赛事聚合与观看指南</title>
+  <meta name="description" content="每日大赛app在线观看yandex聚合每日赛事、赛程、回放与项目分类，提供今日大赛、热门赛事、规则解析和观看路径，适合关注竞技赛事的观众查找内容。">
+  <meta name="keywords" content="每日赛事赛程, 在线观看入口, 竞技项目分类, 赛事回放解析, 热门大赛榜单">
+  <style>
+    /* ---------- 全局色彩与变量 ---------- */
+    :root {
+      --bg-page: #f4f6fa;
+      --bg-panel: #ffffff;
+      --bg-soft: #eef2f8;
+      --ink-primary: #0a1a2b;
+      --ink-secondary: #2c3e50;
+      --ink-muted: #5e6f82;
+      --line-light: #dce3ec;
+      --accent-blue: #0f3b6e;
+      --accent-cyan: #1d8fa3;
+      --accent-amber: #d97706;
+      --accent-red: #b91c1c;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 6px 18px rgba(0, 20, 40, 0.06);
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --header-height: 68px;
+      --announce-height: 40px;
+      --sticky-offset: calc(var(--announce-height) + var(--header-height));
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-padding-top: var(--sticky-offset);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-page);
+      color: var(--ink-primary);
+      line-height: 1.6;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ---------- 吸顶公告条 ---------- */
+    .announce-bar {
+      position: sticky;
+      top: 0;
+      z-index: 60;
+      background: linear-gradient(90deg, #0b2a47, #123b5e);
+      color: #ffffff;
+      padding: 10px 24px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      text-align: center;
+      height: var(--announce-height);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .announce-bar strong {
+      color: #ffdb8e;
+      font-weight: 700;
+    }
+
+    .announce-bar .badge-new {
+      background: #d97706;
+      color: #ffffff;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+    }
+
+    /* ---------- 吸顶页头 ---------- */
+    .site-header {
+      position: sticky;
+      top: var(--announce-height);
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--line-light);
+      box-shadow: var(--shadow-sm);
+      height: var(--header-height);
+      display: flex;
+      align-items: center;
+    }
+
+    .header-inner {
+      width: 100%;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .brand svg {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+    }
+
+    .brand-text {
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.3px;
+      color: var(--accent-blue);
+      line-height: 1.2;
+      max-width: 260px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .main-nav a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+      padding: 6px 12px;
+      border-radius: 30px;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    .main-nav a:hover {
+      background: var(--bg-soft);
+      color: var(--accent-blue);
+    }
+
+    .header-quick {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: var(--bg-soft);
+      border-radius: 30px;
+      padding: 4px 4px 4px 16px;
+      border: 1px solid transparent;
+      transition: border-color 0.15s;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--accent-cyan);
+      background: #ffffff;
+    }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      font-size: 14px;
+      padding: 6px 0;
+      width: 140px;
+      outline: none;
+      color: var(--ink-primary);
+      font-family: inherit;
+    }
+
+    .search-box input::placeholder {
+      color: #8a9aa9;
+    }
+
+    .search-box button {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border: none;
+      border-radius: 30px;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-family: inherit;
+    }
+
+    .search-box button:hover {
+      background: #0b2a47;
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--line-light);
+      background: #ffffff;
+      border-radius: 30px;
+      padding: 7px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent-cyan);
+      color: var(--accent-cyan);
+    }
+
+    /* ---------- 容器 ---------- */
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ---------- 首屏 ---------- */
+    .hero {
+      background: linear-gradient(135deg, #eef4fb 0%, #ffffff 80%);
+      padding: 40px 0 32px;
+      border-bottom: 1px solid var(--line-light);
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 0.9fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.8px;
+      color: var(--accent-blue);
+      margin-bottom: 16px;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: var(--ink-secondary);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      max-width: 560px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border: none;
+      border-radius: 40px;
+      padding: 12px 28px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary:hover {
+      background: #0b2a47;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--accent-blue);
+      border: 1px solid var(--line-light);
+      border-radius: 40px;
+      padding: 12px 28px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent-blue);
+      background: #f8fafd;
+    }
+
+    .hero-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--ink-muted);
+    }
+
+    .hero-tags span {
+      background: #ffffff;
+      border: 1px solid var(--line-light);
+      border-radius: 20px;
+      padding: 4px 12px;
+    }
+
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 240px;
+    }
+
+    .hero-visual svg {
+      width: 100%;
+      max-width: 420px;
+      height: auto;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ---------- 三栏主布局 ---------- */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr) 260px;
+      gap: 28px;
+      padding: 32px 0 48px;
+      align-items: start;
+    }
+
+    /* 左频道索引 */
+    .channel-index {
+      background: var(--bg-panel);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line-light);
+      padding: 16px 0;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: var(--sticky-offset);
+    }
+
+    .channel-index h2 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--ink-muted);
+      padding: 0 16px 12px;
+      border-bottom: 1px solid var(--line-light);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .channel-index ul {
+      list-style: none;
+    }
+
+    .channel-index li a {
+      display: flex;
+      align-items: center;
+      padding: 9px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+      border-left: 3px solid transparent;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .channel-index li a:hover {
+      background: var(--bg-soft);
+      color: var(--accent-blue);
+      border-left-color: var(--accent-cyan);
+    }
+
+    /* 中主内容 */
+    .main-content {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    /* 右辅助栏 */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      position: sticky;
+      top: var(--sticky-offset);
+    }
+
+    .sidebar-block {
+      background: var(--bg-panel);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line-light);
+      padding: 20px 18px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sidebar-block h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sidebar-list li {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--ink-secondary);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line-light);
+    }
+
+    .sidebar-list li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .sidebar-list .item-title {
+      font-weight: 600;
+      color: var(--ink-primary);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .sidebar-list .item-meta {
+      font-size: 12px;
+      color: var(--ink-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .top-badge {
+      background: var(--accent-amber);
+      color: #ffffff;
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    /* ---------- 板块通用 ---------- */
+    .section-block {
+      background: var(--bg-panel);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line-light);
+      padding: 28px 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent-blue);
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-subtitle {
+      font-size: 14px;
+      color: var(--ink-muted);
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    /* 概览文字 */
+    .overview-text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--ink-secondary);
+    }
+
+    .overview-text p {
+      margin-bottom: 12px;
+    }
+
+    /* 卡片网格 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 18px;
+    }
+
+    .event-card {
+      background: var(--bg-page);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line-light);
+      overflow: hidden;
+      transition: transform 0.15s, box-shadow 0.15s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .event-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .event-card img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      background: #d4dde8;
+    }
+
+    .event-card-body {
+      padding: 14px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .event-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink-primary);
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+
+    .event-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .tag {
+      background: var(--bg-soft);
+      color: var(--ink-secondary);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .tag-accent {
+      background: #e6f0fa;
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+
+    .event-card-desc {
+      font-size: 13px;
+      color: var(--ink-muted);
+      line-height: 1.55;
+      margin-bottom: 10px;
+      flex: 1;
+    }
+
+    .event-card-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--ink-muted);
+      border-top: 1px solid var(--line-light);
+      padding-top: 10px;
+      margin-top: auto;
+    }
+
+    .hot-value {
+      color: var(--accent-red);
+      font-weight: 700;
+    }
+
+    /* 紧凑列表 */
+    .compact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .compact-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--line-light);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .compact-list li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .compact-list .title {
+      font-weight: 600;
+      color: var(--ink-primary);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .compact-list .desc {
+      color: var(--ink-muted);
+      font-size: 13px;
+      flex: 1;
+    }
+
+    .compact-list .time {
+      font-size: 12px;
+      color: var(--ink-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* 分类标签索引 */
+    .category-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .category-tags a {
+      background: var(--bg-soft);
+      border: 1px solid var(--line-light);
+      border-radius: 30px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-secondary);
+      transition: all 0.15s;
+    }
+
+    .category-tags a:hover {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border-color: var(--accent-blue);
+    }
+
+    /* 深度解析 */
+    .deep-dive {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--ink-secondary);
+    }
+
+    .deep-dive h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin: 24px 0 10px;
+    }
+
+    .deep-dive h3:first-of-type {
+      margin-top: 0;
+    }
+
+    .deep-dive p {
+      margin-bottom: 12px;
+    }
+
+    .deep-dive ul {
+      margin: 8px 0 16px 20px;
+      list-style: disc;
+    }
+
+    .deep-dive li {
+      margin-bottom: 6px;
+    }
+
+    /* 体验步骤 */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      background: var(--accent-blue);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 16px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-content {
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: var(--ink-secondary);
+    }
+
+    .step-content strong {
+      color: var(--ink-primary);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* FAQ */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .faq-list details {
+      background: var(--bg-page);
+      border: 1px solid var(--line-light);
+      border-radius: var(--radius-md);
+      padding: 0 16px;
+    }
+
+    .faq-list summary {
+      cursor: pointer;
+      padding: 14px 0;
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--ink-primary);
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-list summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-list summary::after {
+      content: "+";
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--accent-cyan);
+      transition: transform 0.2s;
+    }
+
+    .faq-list details[open] summary::after {
+      content: "−";
+    }
+
+    .faq-list .faq-answer {
+      padding: 0 0 16px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--ink-secondary);
+      border-top: 1px solid var(--line-light);
+      padding-top: 12px;
+      margin-top: 0;
+    }
+
+    /* 评论 */
+    .comment-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .comment-item {
+      background: var(--bg-page);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      border: 1px solid var(--line-light);
+    }
+
+    .comment-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .comment-name {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--accent-blue);
+    }
+
+    .comment-time {
+      font-size: 11px;
+      color: var(--ink-muted);
+    }
+
+    .comment-body {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--ink-secondary);
+    }
+
+    /* 资讯 */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .news-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .news-item img {
+      width: 100px;
+      height: 68px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: #d4dde8;
+    }
+
+    .news-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .news-content .news-title {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--ink-primary);
+      margin-bottom: 4px;
+    }
+
+    .news-content .news-date {
+      font-size: 12px;
+      color: var(--ink-muted);
+      margin-bottom: 4px;
+    }
+
+    .news-content .news-summary {
+      font-size: 13px;
+      color: var(--ink-secondary);
+      line-height: 1.5;
+    }
+
+    /* 相关推荐 */
+    .related-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .related-tags a {
+      background: #ffffff;
+      border: 1px solid var(--line-light);
+      border-radius: 30px;
+      padding: 7px 16px;
+      font-size: 13.5px;
+      color: var(--ink-secondary);
+      transition: all 0.15s;
+    }
+
+    .related-tags a:hover {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border-color: var(--accent-blue);
+    }
+
+    /* 榜单 */
+    .rank-list {
+      list-style: none;
+      counter-reset: rank;
+    }
+
+    .rank-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line-light);
+      font-size: 14px;
+      counter-increment: rank;
+    }
+
+    .rank-list li::before {
+      content: counter(rank);
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--ink-muted);
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .rank-list li:nth-child(1)::before {
+      color: #d97706;
+    }
+
+    .rank-list li:nth-child(2)::before {
+      color: #6b7a8c;
+    }
+
+    .rank-list li:nth-child(3)::before {
+      color: #b45309;
+    }
+
+    .rank-list .rank-title {
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .rank-list .rank-hot {
+      font-size: 12px;
+      color: var(--accent-red);
+      font-weight: 700;
+    }
+
+    /* 页尾 */
+    .site-footer {
+      background: #0a1a2b;
+      color: #cfdceb;
+      padding: 40px 0 28px;
+      margin-top: 24px;
+      font-size: 13.5px;
+    }
+
+    .footer-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+
+    .footer-brand h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .footer-brand p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #9bb0c4;
+      max-width: 280px;
+    }
+
+    .footer-col h4 {
+      font-size: 14px;
+      color: #ffffff;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-col ul li a {
+      color: #9bb0c4;
+      font-size: 13px;
+      transition: color 0.15s;
+    }
+
+    .footer-col ul li a:hover {
+      color: #ffffff;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #1e334a;
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: #7a8fa3;
+    }
+
+    .footer-bottom .sample-note {
+      font-size: 12px;
+      color: #7a8fa3;
+    }
+
+    /* 搜索无结果提示 */
+    .no-result-tip {
+      padding: 16px;
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      border-radius: 8px;
+      color: #856404;
+      font-size: 14px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    /* 响应式 */
+    @media (max-width: 1024px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .channel-index {
+        position: static;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 12px;
+        gap: 4px;
+      }
+      .channel-index h2 {
+        width: 100%;
+        border-bottom: none;
+        padding: 0 4px 4px;
+        margin-bottom: 0;
+      }
+      .channel-index ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      .channel-index li a {
+        border-left: none;
+        border-radius: 30px;
+        padding: 5px 14px;
+        font-size: 13px;
+        background: var(--bg-page);
+      }
+      .sidebar {
+        position: static;
+      }
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .hero-visual {
+        order: -1;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 740px) {
+      :root {
+        --header-height: 56px;
+        --announce-height: 36px;
+      }
+      .header-inner {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 8px 16px;
+      }
+      .main-nav {
+        display: none;
+      }
+      .hero-content h1 {
+        font-size: 28px;
+      }
+      .container {
+        padding: 0 16px;
+      }
+      .section-block {
+        padding: 20px 16px;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      .comment-list {
+        grid-template-columns: 1fr;
+      }
+      .news-item {
+        flex-direction: column;
+      }
+      .news-item img {
+        width: 100%;
+        height: 140px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .compact-list li {
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+      .compact-list .title {
+        white-space: normal;
+      }
+      .search-box input {
+        width: 100px;
+      }
+    }
+  </style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+  <!-- 吸顶公告条 -->
+  <div class="announce-bar">
+    <span class="badge-new">NEW</span>
+    <span>11 月 8 日更新：今日大赛新增 <strong>6 场</strong> 直播，回放专区已上线 <strong>“环法挑战赛”</strong> 全程集锦</span>
+    <span>| 热门项目 <strong>“极速方程式”</strong> 决赛今晚 20:00 开赛</span>
+  </div>
+
+  <!-- 吸顶页头 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="36" height="36" rx="10" fill="#0f3b6e"/>
+          <path d="M10 24L16 12L20 20L24 10L28 24H10Z" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <circle cx="18" cy="26" r="2" fill="#1d8fa3"/>
+        </svg>
+        <span class="brand-text">每日大赛app在线观看yandex</span>
+      </div>
+      <nav class="main-nav" aria-label="主导航">
+        <a href="/#today-events">今日赛程</a>
+        <a href="/#featured-events">热门赛事</a>
+        <a href="/#live-updates">直播动态</a>
+        <a href="/#categories">项目分类</a>
+        <a href="/#deep-analysis">规则解析</a>
+        <a href="/#faq">常见问题</a>
+      </nav>
+      <div class="header-quick">
+        <div class="search-box" role="search">
+          <input type="search" id="searchInput" placeholder="搜索赛事/项目" aria-label="搜索赛事或项目">
+          <button type="button" id="searchBtn" aria-label="搜索">搜索</button>
+        </div>
+        <button class="btn-outline" type="button" aria-label="观看入口">观看入口</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 首屏 -->
+  <section class="hero" aria-label="主题首屏">
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <h1>每日大赛app在线观看yandex</h1>
+        <p class="hero-desc">聚合每日大赛赛程、直播入口、回放集锦与项目分类。从极速方程式到环法挑战赛，从今日开赛到规则解析，帮助竞技爱好者快速定位可观看的赛事内容与项目看点。</p>
+        <div class="hero-actions">
+          <a href="/#today-events" class="btn-primary">查看今日赛程</a>
+          <a href="/#featured-events" class="btn-secondary">热门赛事推荐</a>
+        </div>
+        <div class="hero-tags">
+          <span>今日 12 场直播</span>
+          <span>回放更新 8 条</span>
+          <span>新增项目 3 个</span>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <svg viewBox="0 0 420 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="420" height="280" rx="16" fill="#e8f0f9"/>
+          <rect x="30" y="30" width="180" height="100" rx="10" fill="#0f3b6e" opacity="0.12"/>
+          <rect x="30" y="30" width="180" height="100" rx="10" stroke="#0f3b6e" stroke-width="1.5" fill="none"/>
+          <circle cx="80" cy="80" r="18" stroke="#1d8fa3" stroke-width="3" fill="none"/>
+          <path d="M160 50 L200 80 L160 110" stroke="#0f3b6e" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <rect x="240" y="50" width="150" height="60" rx="8" fill="#ffffff" stroke="#dce3ec" stroke-width="1"/>
+          <line x1="255" y1="70" x2="370" y2="70" stroke="#dce3ec" stroke-width="4" stroke-linecap="round"/>
+          <line x1="255" y1="84" x2="330" y2="84" stroke="#dce3ec" stroke-width="4" stroke-linecap="round"/>
+          <rect x="60" y="160" width="300" height="80" rx="12" fill="#ffffff" stroke="#dce3ec" stroke-width="1.5"/>
+          <rect x="80" y="180" width="60" height="40" rx="6" fill="#1d8fa3" opacity="0.2"/>
+          <rect x="155" y="180" width="80" height="10" rx="4" fill="#0f3b6e" opacity="0.3"/>
+          <rect x="155" y="198" width="120" height="8" rx="4" fill="#0f3b6e" opacity="0.15"/>
+          <rect x="155" y="212" width="60" height="8" rx="4" fill="#0f3b6e" opacity="0.15"/>
+          <circle cx="330" cy="200" r="16" fill="#d97706" opacity="0.8"/>
+          <path d="M326 200 L334 200 M330 196 L330 204" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 三栏主布局 -->
+  <div class="container">
+    <div class="main-layout">
+
+      <!-- 左频道索引 -->
+      <aside class="channel-index" aria-label="频道索引">
+        <h2>频道索引</h2>
+        <ul>
+          <li><a href="/#today-events">今日赛程</a></li>
+          <li><a href="/#featured-events">热门赛事</a></li>
+          <li><a href="/#live-updates">直播动态</a></li>
+          <li><a href="/#categories">项目分类</a></li>
+          <li><a href="/#deep-analysis">深度解析</a></li>
+          <li><a href="/#experience-guide">观看路径</a></li>
+          <li><a href="/#faq">常见问题</a></li>
+          <li><a href="/#user-comments">用户评论</a></li>
+          <li><a href="/#news">赛事资讯</a></li>
+          <li><a href="/#related">相关推荐</a></li>
+          <li><a href="/#rankings">热门榜单</a></li>
+        </ul>
+      </aside>
+
+      <!-- 中主内容 -->
+      <main class="main-content">
+
+        <!-- 概览 -->
+        <section class="section-block" id="overview" aria-labelledby="overview-title">
+          <h2 class="section-title" id="overview-title">赛事领域概览</h2>
+          <div class="overview-text">
+            <p>每日大赛所覆盖的竞技内容，按项目形态大致分为极速竞速、耐力挑战、技巧对决和团队战术四类。极速方程式与环法挑战赛代表速度与耐力的两端，前者以单圈冲刺和进站策略为核心看点，后者更看重爬坡节奏与补给时机。技巧类项目如“极限攀岩大师赛”和“精准射箭联赛”对动作稳定性要求极高，回放中慢镜头往往比直播更能看清技术细节。</p>
+            <p>当前值得关注的具体内容：11 月 8 日当天有 12 场直播，其中“极速方程式·收官站”和“环法挑战赛·山地赛段”关注度最高；回放专区新上线了“亚洲室内田径锦标赛”的全程集锦和“世界街舞大赛”的八强对决。项目分类页收录了 8 个大类、40 余个具体赛事条目，每个条目附带赛制说明和往届看点。</p>
+          </div>
+        </section>
+
+        <!-- 今日赛程 -->
+        <section class="section-block" id="today-events" aria-labelledby="today-title">
+          <h2 class="section-title" id="today-title">今日赛程 · 11 月 8 日</h2>
+          <p class="section-subtitle">当天可观看的具体赛事与开赛时间，按关注度排序</p>
+          <ul class="compact-list">
+            <li><span class="title">极速方程式·收官站</span><span class="desc">正赛 20:00 开跑，排位赛已于 15:00 结束</span><span class="time">今天 20:00</span></li>
+            <li><span class="title">环法挑战赛·山地赛段</span><span class="desc">第 14 赛段直播，爬坡积分争夺关键战</span><span class="time">今天 18:30</span></li>
+            <li><span class="title">极限攀岩大师赛·决赛</span><span class="desc">男子难度赛决赛，8 名选手争夺年度总冠军</span><span class="time">今天 19:00</span></li>
+            <li><span class="title">精准射箭联赛·第 9 轮</span><span class="desc">反曲弓个人淘汰赛，奥运选手参与角逐</span><span class="time">今天 16:00</span></li>
+            <li><span class="title">世界街舞大赛·四强战</span><span class="desc">Breaking 与 Popping 混合赛制，四组对决</span><span class="time">今天 21:30</span></li>
+            <li><span class="title">亚洲室内田径锦标赛·第二日</span><span class="desc">男子 60 米栏与女子跳高决赛</span><span class="time">今天 14:00</span></li>
+            <li><span class="title">城市滑板公开赛·街式决赛</span><span class="desc">12 名滑手三轮线路比拼，取最佳成绩</span><span class="time">今天 17:00</span></li>
+            <li><span class="title">冬季游泳锦标赛·短池</span><span class="desc">男女 100 米自由泳半决赛与决赛</span><span class="time">今天 10:30</span></li>
+          </ul>
+        </section>
+
+        <!-- 精选内容推荐 -->
+        <section class="section-block" id="featured-events" aria-labelledby="featured-title">
+          <h2 class="section-title" id="featured-title">精选内容推荐</h2>
+          <p class="section-subtitle">6 个当前值得投入时间观看的赛事条目</p>
+          <div class="card-grid">
+            <article class="event-card">
+              <img src="https://picsum.photos/seed/jisu-fangchengshi01/400/300" width="400" height="300" alt="极速方程式收官站赛道全景" loading="lazy">
+              <div class="event-card-body">
+                <h3 class="event-card-title">极速方程式·收官站</h3>
+                <div class="event-card-tags">
+                  <span class="tag tag-accent">竞速</span>
+                  <span class="tag">年度冠军</span>
+                  <span class="tag">进站策略</span>
+                </div>
+                <p class="event-card-desc">年度车手总冠军在本站决出，三条长直道与两个发夹弯让超车窗口集中在进站前后。排位赛成绩显示前排差距仅 0.3 秒，正赛轮胎策略将成为胜负手。</p>
+                <div class="event-card-meta"><span>热度 <span class="hot-value">98.2万</span></span><span>今天 20:00</span></div>
+              </div>
+            </article>
+            <article class="event-card">
+              <img src="https://picsum.photos/seed/huanfa-tiaozhan02/400/300" width="400" height="300" alt="环法挑战赛山地赛段爬坡路线" loading="lazy">
+              <div class="event-card-body">
+                <h3 class="event-card-title">环法挑战赛·山地赛段</h3>
+                <div class="event-card-tags">
+                  <span class="tag tag-accent">耐力</span>
+                  <span class="tag">爬坡积分</span>
+                  <span class="tag">补给战术</span>
+                </div>
+                <p class="event-card-desc">第 14 赛段包含两个 HC 级爬坡点，总爬升超过 3200 米。黄衫争夺者在最后 5 公里坡道的进攻时机是核心悬念，车队副将的领骑消耗同样值得留意。</p>
+                <div class="event-card-meta"><span>热度 <span class="hot-value">85.7万</span></span><span>今天 18:30</span></div>
+              </div>
+            </article>
+            <article class="event-card">
+              <img src="https://picsum.photos/seed/panyan-dashi03/400/300" width="400" height="300" alt="极限攀岩大师赛决赛岩壁" loading="lazy">
+              <div class="event-card-body">
+                <h3 class="event-card-title">极限攀岩大师赛·决赛</h3>
+                <div class="event-card-tags">
+                  <span class="tag tag-accent">技巧</span>
+                  <span class="tag">难度赛</span>
+                  <span class="tag">年度积分</span>
+                </div>
+                <p class="event-card-desc">男子难度赛决赛线路由定线员设置三个动态跳跃动作，岩壁倾斜度达到 35 度。年度积分前四名选手全部晋级，谁能完攀谁就锁定总冠军。</p>
+                <div class="event-card-meta"><span>热度 <span class="hot-value">72.3万</span></span><span>今天 19:00</span></div>
+              </div>
+            </article>
+            <article class="event-card">
+              <img src="https://picsum.photos/seed/shejian-liansai04/400/300" width="400" height="300" alt="精准射箭联赛反曲弓淘汰赛" loading="lazy">
+              <div class="event-card-body">
+                <h3 class="event-card-title">精准射箭联赛·第 9 轮</h3>
+                <div class="event-card-tags">
+                  <span class="tag tag-accent">精准</span>
+                  <span class="tag">反曲弓</span>
+                  <span class="tag">淘汰赛</span>
+                </div>
+                <p class="event-card-desc">反曲弓个人淘汰赛采用局胜制，每局三箭定胜负。两名奥运选手分处上下半区，决赛潜在对阵是本赛季第三次相遇，前两次各胜一场。</p>
+                <div class="event-card-meta"><span>热度 <span class="hot-value">64.1万</span></span><span>今天 16:00</span></div>
+              </div>
+            </article>
+            <article class="event-card">
+              <img src="https://picsum.photos/seed/shijie-jiewu05/400/300" width="400" height="300" alt="世界街舞大赛四强战舞台" loading="lazy">
+              <div class="event-card-body">
+                <h3 class="event-card-title">世界街舞大赛·四强战</h3>
+                <div class="event-card-tags">
+                  <span class="tag tag-accent">对决</span>
+                  <span class="tag">Breaking</span>
+                  <span class="tag">Popping</span>
+                </div>
+                <p class="event-card-desc">四强战采用混合赛制，Breaking 与 Popping 选手同台对决，DJ 随机放曲考验临场反应。上届冠军在八强战中以 3:1 晋级，状态正盛。</p>
+                <div class="event-card-meta"><span>热度 <span class="hot-value">58.6万</span></span><span>今天 21:30</span></div>
+              </div>
+            </article>
+            <article class="event-card">
+              <img src="https://picsum.photos/seed/huaban-gongkaisai06/400/300" width="400" height="300" alt="城市滑板公开赛街式决赛场地" loading="lazy">
+              <div class="event-card-body">
+                <h3 class="event-card-title">城市滑板公开赛·街式决赛</h3>
+                <div class="event-card-tags">
+                  <span class="tag tag-accent">街头</span>
+                  <span class="tag">街式赛</span>
+                  <span class="tag">线路挑战</span>
+                </div>
+                <p class="event-card-desc">决赛场地设置扶手、台阶和斜坡组合，12 名滑手三轮线路取最佳成绩。两位 16 岁新秀在预赛中完成 360 度翻板，决赛可能尝试更高难度动作。</p>
+                <div class="event-card-meta"><span>热度 <span class="hot-value">51.4万</span></span><span>今天 17:00</span></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- 直播动态 -->
+        <section class="section-block" id="live-updates" aria-labelledby="live-title">
+          <h2 class="section-title" id="live-title">最新直播与回放动态</h2>
+          <p class="section-subtitle">具体条目与更新摘要，按时间倒序</p>
+          <ul class="compact-list">
+            <li><span class="title">极速方程式·收官站排位赛</span><span class="desc">回放已上线，杆位成绩 1:28.443，前五名差距 0.3 秒内</span><span class="time">今天 15:40</span></li>
+            <li><span class="title">环法挑战赛·第 13 赛段集锦</span><span class="desc">冲刺手终点前 200 米反超，赛段冠军易主</span><span class="time">昨天 22:10</span></li>
+            <li><span class="title">极限攀岩大师赛·半决赛</span><span class="desc">8 名选手晋级决赛，两名夺冠热门意外脱落</span><span class="time">昨天 20:30</span></li>
+            <li><span class="title">亚洲室内田径锦标赛·首日</span><span class="desc">男子 60 米栏赛会纪录被刷新，成绩 7.42 秒</span><span class="time">11 月 7 日</span></li>
+            <li><span class="title">世界街舞大赛·八强战</span><span class="desc">上届冠军 3:1 晋级，半决赛将对阵预赛第一</span><span class="time">11 月 7 日</span></li>
+            <li><span class="title">精准射箭联赛·第 8 轮</span><span class="desc">决赛加赛一箭定胜负，视频回放已更新</span><span class="time">11 月 6 日</span></li>
+            <li><span class="title">城市滑板公开赛·预赛</span><span class="desc">两位 16 岁新秀完成 360 度翻板，进入决赛</span><span class="time">11 月 6 日</span></li>
+            <li><span class="title">冬季游泳锦标赛·报名名单</span><span class="desc">短池项目新增 4 名选手，赛程微调至 10:30</span><span class="time">11 月 5 日</span></li>
+          </ul>
+        </section>
+
+        <!-- 分类入口 -->
+        <section class="section-block" id="categories" aria-labelledby="categories-title">
+          <h2 class="section-title" id="categories-title">项目分类入口</h2>
+          <p class="section-subtitle">按项目类型查找具体赛事，点击进入对应分类介绍</p>
+          <div class="category-tags">
+            <a href="/#categories">极速竞速</a>
+            <a href="/#categories">耐力挑战</a>
+            <a href="/#categories">技巧对决</a>
+            <a href="/#categories">团队战术</a>
+            <a href="/#categories">精准射击</a>
+            <a href="/#categories">街头文化</a>
+            <a href="/#categories">田径基础</a>
+            <a href="/#categories">水上项目</a>
+          </div>
+        </section>
+
+        <!-- 深度解析 -->
+        <section class="section-block" id="deep-analysis" aria-labelledby="deep-title">
+          <h2 class="section-title" id="deep-title">深度解析 · 赛事类型与观看判断</h2>
+          <div class="deep-dive">
+            <h3>极速竞速与耐力挑战的核心差异</h3>
+            <p>极速方程式这类场地竞速赛事，观看重点在于单圈节奏、进站窗口和轮胎策略。比赛时间通常在 1.5 到 2 小时之间，节奏快、信息密度高，适合喜欢短周期高强度对抗的观众。环法挑战赛则完全不同，单个赛段动辄 4 到 5 小时，爬坡点和冲刺点的分布决定了整场的战术走向。前者看的是瞬间决策，后者看的是体力分配和团队协作。</p>
+            <p>判断一场极速赛事是否值得看，可以先看排位赛成绩差距。如果前十名差距在 0.5 秒以内，正赛的超车机会通常较多；如果杆位领先超过 0.8 秒，比赛可能陷入巡航节奏。耐力赛事的判断依据则是赛段类型：山地赛段关注爬坡积分榜前三名的状态，平路赛段则看冲刺车队的领骑控制力。</p>
+            <h3>技巧类项目的评判维度</h3>
+            <p>极限攀岩、精准射箭和街舞大赛都属于技巧类项目，但评判逻辑各不相同。攀岩难度赛以完攀高度为主要指标，同等高度下比较尝试次数，次数少者胜。射箭淘汰赛采用局胜制，每局三箭，环数总和高者得 2 分，平局各得 1 分，先到 6 分者获胜。街舞对决则由裁判从技术、创意、完成度和音乐性四个维度打分，通常采用多数票制。</p>
+            <ul>
+              <li><strong>攀岩：</strong>先看线路定级，再看选手完攀高度与尝试次数</li>
+              <li><strong>射箭：</strong>关注局分变化，加赛一箭的心理博弈是最大看点</li>
+              <li><strong>街舞：</strong>留意 DJ 选曲与选手的即兴反应，裁判分歧往往出现在创意分</li>
+            </ul>
+            <h3>回放与直播的选择策略</h3>
+            <p>直播适合观看结果悬念强的赛事，比如年度冠军争夺战或淘汰赛决赛。回放更适合技术分析型内容，比如攀岩的慢动作回放能看清每个岩点的抓握方式，射箭的回放可以逐帧观察撒放动作。如果时间有限，优先看官方剪辑的 5 分钟集锦，再决定是否补看全程。对于多日赛，建议从倒数第二个赛段开始看，此时积分榜和晋级形势已经清晰，观赛门槛更低。</p>
+          </div>
+        </section>
+
+        <!-- 体验指南 -->
+        <section class="section-block" id="experience-guide" aria-labelledby="guide-title">
+          <h2 class="section-title" id="guide-title">观看路径与选择建议</h2>
+          <p class="section-subtitle">从第一次接触到了解具体项目，按顺序推进</p>
+          <div class="steps">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-content"><strong>先看今日赛程确定时间</strong>当日直播场次按关注度排序，标注了开赛时间和项目类型，可根据空闲时段直接选择。</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-content"><strong>从集锦回放判断兴趣</strong>如果不确定是否要看全程，先看 5 分钟回放集锦。攀岩和射箭的集锦信息密度高，竞速类则建议看最后 10 圈。</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-content"><strong>了解赛制再决定投入时间</strong>淘汰赛和联赛的观看节奏完全不同。局胜制项目每局时间短，适合碎片时间；多日赛需要连续关注积分变化。</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">4</div>
+              <div class="step-content"><strong>对比同类项目找偏好</strong>极速竞速和耐力挑战都涉及体能分配，但观看体验差异明显。技巧类项目之间也有区别：攀岩看线路解读，射箭看稳定性，街舞看临场创意。</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section-block" id="faq" aria-labelledby="faq-title">
+          <h2 class="section-title" id="faq-title">常见问题</h2>
+          <div class="faq-list">
+            <details>
+              <summary>极速方程式收官站的正赛和排位赛时间分别是什么？</summary>
+              <div class="faq-answer">排位赛已于 11 月 8 日 15:00 结束，正赛今天 20:00 开跑。排位赛决定发车顺序，正赛结果决定年度车手总冠军归属。</div>
+            </details>
+            <details>
+              <summary>环法挑战赛的山地赛段一般持续多长时间？</summary>
+              <div class="faq-answer">第 14 赛段总里程约 185 公里，包含两个 HC 级爬坡，预计骑行时间在 4 小时 20 分钟到 4 小时 50 分钟之间，取决于集团配速和风向。</div>
+            </details>
+            <details>
+              <summary>极限攀岩难度赛的评判标准是什么？</summary>
+              <div class="faq-answer">以选手到达的最高岩点高度为主要依据，同等高度下比较尝试次数，次数少者排名靠前。如果多人完攀，则比较完攀所用时间。</div>
+            </details>
+            <details>
+              <summary>精准射箭联赛的局胜制怎么理解？</summary>
+              <div class="faq-answer">每局每人射三箭，环数总和较高者得 2 分，平局各得 1 分。先达到 6 分的选手获胜，如果 5 局后战平则进行加赛，加赛每箭定胜负。</div>
+            </details>
+            <details>
+              <summary>第一次看世界街舞大赛，从哪个环节开始比较合适？</summary>
+              <div class="faq-answer">建议从四强战开始看，此时选手水平较高、对决节奏紧凑。混合赛制下 Breaking 和 Popping 交替出场，能快速了解两种风格的差异。</div>
+            </details>
+            <details>
+              <summary>城市滑板公开赛的决赛轮次怎么安排？</summary>
+              <div class="faq-answer">决赛共 12 名滑手，每人三轮线路，取三轮中的最佳成绩排名。每轮限时 45 秒，动作失误可以继续完成剩余线路，但该轮分数会受影响。</div>
+            </details>
+          </div>
+        </section>
+
+        <!-- 用户评论 -->
+        <section class="section-block" id="user-comments" aria-labelledby="comments-title">
+          <h2 class="section-title" id="comments-title">用户评论</h2>
+          <p class="section-subtitle">来自赛事观众的 16 条讨论，围绕具体条目和类型展开</p>
+          <div class="comment-list">
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">弯道观察员</span><span class="comment-time">今天 14:20</span></div><p class="comment-body">极速方程式排位赛前五名只差 0.3 秒，正赛应该会很胶着。轮胎策略可能是关键，中性胎起步的车手如果早进站可能会丢位置。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">山地车手老陈</span><span class="comment-time">今天 13:05</span></div><p class="comment-body">环法第 14 赛段两个 HC 爬坡，最后 5 公里坡度超过 10%，黄衫集团肯定要进攻。副将的消耗程度决定了主将能不能撑到最后。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">岩点猎人</span><span class="comment-time">今天 11:48</span></div><p class="comment-body">攀岩决赛线路有三个动态跳跃，定线员明显想拉开差距。半决赛掉的两个热门可能是体能分配出了问题，决赛看谁能稳住。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">十环不解释</span><span class="comment-time">今天 10:30</span></div><p class="comment-body">射箭联赛第 9 轮，两个奥运选手分处上下半区，决赛碰面的话就是本赛季第三次交手，前两次各赢一场，这次应该很接近。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">街舞小旋风</span><span class="comment-time">昨天 22:15</span></div><p class="comment-body">上届冠军八强战 3:1 晋级，状态确实好。但半决赛对手是预赛第一，Popping 对 Breaking 的混合赛制下 DJ 选曲会很大程度影响结果。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">滑板阿飞</span><span class="comment-time">昨天 21:40</span></div><p class="comment-body">两个 16 岁新秀在预赛就完成 360 度翻板，决赛如果尝试更高难度动作成功率可能下降。街式赛取最佳成绩的规则让选手可以放手一搏。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">田径场边</span><span class="comment-time">昨天 19:20</span></div><p class="comment-body">亚洲室内田径锦标赛男子 60 米栏纪录被刷新到 7.42 秒，这个成绩放在国际赛场也很有竞争力。第二天的 60 米栏决赛值得关注。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">短池观察</span><span class="comment-time">昨天 17:50</span></div><p class="comment-body">冬季游泳锦标赛短池项目新增了 4 名选手，男女 100 米自由泳的竞争格局可能有变化。短池转身技术好的选手优势会更明显。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">回放党小周</span><span class="comment-time">11 月 7 日</span></div><p class="comment-body">环法第 13 赛段集锦看了三遍，冲刺手最后 200 米反超太精彩了。回放的好处是可以慢放看走位，直播的时候根本来不及反应。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">攀岩装备控</span><span class="comment-time">11 月 7 日</span></div><p class="comment-body">极限攀岩大师赛的线路定级看起来在 5.14c 左右，三个动态跳跃对身高臂展要求很高。半决赛掉的两个选手其实动作完成度不错，就是差一个岩点。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">射箭新人</span><span class="comment-time">11 月 6 日</span></div><p class="comment-body">刚接触射箭比赛，局胜制一开始没看懂，看了两轮才明白 6 分制怎么算。加赛一箭定胜负的时候真的很紧张，比看比分牌刺激多了。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">街舞爱好者K</span><span class="comment-time">11 月 6 日</span></div><p class="comment-body">世界街舞大赛的裁判打分有时候会有分歧，尤其是创意分。技术完成度高的选手不一定赢，音乐性和临场反应也很重要。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">赛道数据党</span><span class="comment-time">11 月 5 日</span></div><p class="comment-body">极速方程式收官站的进站窗口预测在 22 到 25 圈之间，如果出现安全车可能会打乱所有车队的计划。前排车手如果同圈进站，出站后的位置争夺会很激烈。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">山地骑行迷</span><span class="comment-time">11 月 5 日</span></div><p class="comment-body">环法挑战赛的补给战术经常被忽略，其实在山地赛段什么时候拿水、拿能量胶直接影响最后爬坡的表现。有些车队会在坡底前统一补给，节奏控制得很好。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">滑板场常客</span><span class="comment-time">11 月 4 日</span></div><p class="comment-body">城市滑板公开赛的决赛场地组合比预赛复杂，扶手和台阶的衔接需要提前规划线路。三轮取最佳成绩的规则下，第一轮通常会保守，后两轮才上难度。</p></div>
+            <div class="comment-item"><div class="comment-head"><span class="comment-name">综合观赛人</span><span class="comment-time">11 月 3 日</span></div><p class="comment-body">最近看了攀岩和射箭的回放，感觉技巧类项目比竞速类更容易入门。攀岩看谁爬得高就行，射箭看环数，规则理解成本低。竞速类需要懂轮胎和进站策略才能看出门道。</p></div>
+          </div>
+        </section>
+
+        <!-- 相关资讯 -->
+        <section class="section-block" id="news" aria-labelledby="news-title">
+          <h2 class="section-title" id="news-title">赛事资讯</h2>
+          <p class="section-subtitle">11 月 8 日前后与具体条目相关的动态</p>
+          <div class="news-list">
+            <article class="news-item">
+              <img src="https://picsum.photos/seed/news-jisu01/600/400" width="600" height="400" alt="极速方程式收官站排位赛现场" loading="lazy">
+              <div class="news-content">
+                <h3 class="news-title">极速方程式收官站排位赛结束，杆位成绩 1:28.443</h3>
+                <p class="news-date">2026-11-08</p>
+                <p class="news-summary">排位赛前三名差距仅 0.12 秒，前五名在 0.3 秒以内。正赛将于今天 20:00 开跑，轮胎策略成为赛前讨论焦点。</p>
+              </div>
+            </article>
+            <article class="news-item">
+              <img src="https://picsum.photos/seed/news-huanfa02/600/400" width="600" height="400" alt="环法挑战赛第14赛段路线图" loading="lazy">
+              <div class="news-content">
+                <h3 class="news-title">环法挑战赛第 14 赛段爬坡积分榜更新，前三名差距 8 分</h3>
+                <p class="news-date">2026-11-07</p>
+                <p class="news-summary">山地赛段前爬坡积分榜前三名分别为 42 分、38 分和 34 分，本赛段两个 HC 级爬坡点将分配 40 分，排名可能发生变化。</p>
+              </div>
+            </article>
+            <article class="news-item">
+              <img src="https://picsum.photos/seed/news-panyan03/600/400" width="600" height="400" alt="极限攀岩大师赛决赛线路定线" loading="lazy">
+              <div class="news-content">
+                <h3 class="news-title">极限攀岩大师赛决赛线路公布，包含三个动态跳跃动作</h3>
+                <p class="news-date">2026-11-07</p>
+                <p class="news-summary">定线员在岩壁 35 度倾斜区域设置三个动态跳跃，年度积分前四名全部晋级决赛，完攀者将锁定总冠军。</p>
+              </div>
+            </article>
+            <article class="news-item">
+              <img src="https://picsum.photos/seed/news-shejian04/600/400" width="600" height="400" alt="精准射箭联赛第9轮淘汰赛对阵" loading="lazy">
+              <div class="news-content">
+                <h3 class="news-title">精准射箭联赛第 9 轮对阵出炉，奥运选手分处上下半区</h3>
+                <p class="news-date">2026-11-06</p>
+                <p class="news-summary">反曲弓个人淘汰赛采用局胜制，两名奥运选手若会师决赛将是本赛季第三次交手。前两次各胜一场，最近一次加赛一箭定胜负。</p>
+              </div>
+            </article>
+            <article class="news-item">
+              <img src="https://picsum.photos/seed/news-jiewu05/600/400" width="600" height="400" alt="世界街舞大赛八强战比赛现场" loading="lazy">
+              <div class="news-content">
+                <h3 class="news-title">世界街舞大赛八强战结束，上届冠军 3:1 晋级四强</h3>
+                <p class="news-date">2026-11-06</p>
+                <p class="news-summary">上届冠军在 Breaking 环节连赢两局，Popping 环节被对手扳回一局后稳住阵脚。半决赛将对阵预赛第一，比赛今天 21:30 开始。</p>
+              </div>
+            </article>
+            <article class="news-item">
+              <img src="https://picsum.photos/seed/news-huaban06/600/400" width="600" height="400" alt="城市滑板公开赛预赛选手动作" loading="lazy">
+              <div class="news-content">
+                <h3 class="news-title">城市滑板公开赛预赛结束，两位 16 岁新秀完成 360 度翻板</h3>
+                <p class="news-date">2026-11-05</p>
+                <p class="news-summary">预赛前 12 名晋级决赛，两位 16 岁选手在第二轮线路中完成 360 度翻板，裁判给出现场最高分。决赛今天 17:00 进行。</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- 相关推荐 -->
+        <section class="section-block" id="related" aria-labelledby="related-title">
+          <h2 class="section-title" id="related-title">相关推荐</h2>
+          <p class="section-subtitle">延伸方向与具体条目索引</p>
+          <div class="related-tags">
+            <a href="/#today-events">今日直播场次表</a>
+            <a href="/#featured-events">极速方程式进站策略</a>
+            <a href="/#featured-events">环法爬坡积分榜</a>
+            <a href="/#deep-analysis">攀岩难度赛定级说明</a>
+            <a href="/#deep-analysis">射箭局胜制规则</a>
+            <a href="/#live-updates">街舞裁判打分维度</a>
+            <a href="/#experience-guide">滑板线路规划入门</a>
+          </div>
+        </section>
+
+        <!-- 热门榜单 -->
+        <section class="section-block" id="rankings" aria-labelledby="rank-title">
+          <h2 class="section-title" id="rank-title">热门榜单 · 11 月 8 日关注度</h2>
+          <p class="section-subtitle">按当日观看热度排序的 6 个具体赛事条目</p>
+          <ol class="rank-list">
+            <li><span class="rank-title">极速方程式·收官站</span><span class="rank-hot">98.2万</span></li>
+            <li><span class="rank-title">环法挑战赛·山地赛段</span><span class="rank-hot">85.7万</span></li>
+            <li><span class="rank-title">极限攀岩大师赛·决赛</span><span class="rank-hot">72.3万</span></li>
+            <li><span class="rank-title">精准射箭联赛·第 9 轮</span><span class="rank-hot">64.1万</span></li>
+            <li><span class="rank-title">世界街舞大赛·四强战</span><span class="rank-hot">58.6万</span></li>
+            <li><span class="rank-title">城市滑板公开赛·街式决赛</span><span class="rank-hot">51.4万</span></li>
+          </ol>
+        </section>
+
+      </main>
+
+      <!-- 右辅助栏 -->
+      <aside class="sidebar" aria-label="辅助信息">
+        <div class="sidebar-block">
+          <h3>今日热度榜</h3>
+          <ul class="sidebar-list">
+            <li><span class="item-title"><span class="top-badge">1</span>极速方程式·收官站</span><span class="item-meta"><span>竞速</span><span>98.2万</span></span></li>
+            <li><span class="item-title"><span class="top-badge">2</span>环法挑战赛·山地赛段</span><span class="item-meta"><span>耐力</span><span>85.7万</span></span></li>
+            <li><span class="item-title"><span class="top-badge">3</span>极限攀岩大师赛·决赛</span><span class="item-meta"><span>技巧</span><span>72.3万</span></span></li>
+            <li><span class="item-title"><span class="top-badge">4</span>精准射箭联赛·第 9 轮</span><span class="item-meta"><span>精准</span><span>64.1万</span></span></li>
+            <li><span class="item-title"><span class="top-badge">5</span>世界街舞大赛·四强战</span><span class="item-meta"><span>对决</span><span>58.6万</span></span></li>
+          </ul>
+        </div>
+        <div class="sidebar-block">
+          <h3>最新回放更新</h3>
+          <ul class="sidebar-list">
+            <li><span class="item-title">极速方程式排位赛回放</span><span class="item-meta"><span>今天 15:40</span></span></li>
+            <li><span class="item-title">环法第 13 赛段集锦</span><span class="item-meta"><span>昨天 22:10</span></span></li>
+            <li><span class="item-title">攀岩半决赛全场回放</span><span class="item-meta"><span>昨天 20:30</span></span></li>
+            <li><span class="item-title">街舞八强战精彩剪辑</span><span class="item-meta"><span>11 月 7 日</span></span></li>
+            <li><span class="item-title">射箭第 8 轮决赛回放</span><span class="item-meta"><span>11 月 6 日</span></span></li>
+          </ul>
+        </div>
+        <div class="sidebar-block">
+          <h3>项目快捷入口</h3>
+          <ul class="sidebar-list">
+            <li><a href="/#categories" style="font-weight:600;color:var(--accent-blue);">极速竞速 →</a></li>
+            <li><a href="/#categories" style="font-weight:600;color:var(--accent-blue);">耐力挑战 →</a></li>
+            <li><a href="/#categories" style="font-weight:600;color:var(--accent-blue);">技巧对决 →</a></li>
+            <li><a href="/#categories" style="font-weight:600;color:var(--accent-blue);">精准射击 →</a></li>
+            <li><a href="/#categories" style="font-weight:600;color:var(--accent-blue);">街头文化 →</a></li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- 页尾 -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>每日大赛app在线观看yandex</h3>
+          <p>聚合每日大赛赛程、直播入口、回放集锦与项目分类，为竞技爱好者提供清晰的观赛路径与规则参考。</p>
+        </div>
+        <div class="footer-col">
+          <h4>赛事入口</h4>
+          <ul>
+            <li><a href="/#today-events">今日赛程</a></li>
+            <li><a href="/#featured-events">热门赛事</a></li>
+            <li><a href="/#live-updates">直播动态</a></li>
+            <li><a href="/#rankings">热门榜单</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>项目分类</h4>
+          <ul>
+            <li><a href="/#categories">极速竞速</a></li>
+            <li><a href="/#categories">耐力挑战</a></li>
+            <li><a href="/#categories">技巧对决</a></li>
+            <li><a href="/#categories">精准射击</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>了解与帮助</h4>
+          <ul>
+            <li><a href="/#deep-analysis">规则解析</a></li>
+            <li><a href="/#experience-guide">观看路径</a></li>
+            <li><a href="/#faq">常见问题</a></li>
+            <li><a href="/#user-comments">用户评论</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 每日大赛内容聚合</span>
+        <span class="sample-note">部分内容为示例数据，仅用于展示页面结构</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 搜索与筛选脚本 -->
+  <script>
+    (function() {
+      const searchInput = document.getElementById('searchInput');
+      const searchBtn = document.getElementById('searchBtn');
+      const noResultTip = document.createElement('div');
+      noResultTip.className = 'no-result-tip';
+      noResultTip.textContent = '未找到匹配的赛事或项目，请尝试其他关键词（如“攀岩”“射箭”“极速”）。';
+      const mainContent = document.querySelector('.main-content');
+      if (mainContent) {
+        mainContent.prepend(noResultTip);
+      }
+
+      function performSearch() {
+        const keyword = searchInput.value.trim().toLowerCase();
+        const cards = document.querySelectorAll('.event-card, .compact-list li, .news-item, .rank-list li, .faq-list details');
+        let visibleCount = 0;
+        cards.forEach(el => {
+          if (!keyword) {
+            el.style.display = '';
+            visibleCount++;
+          } else {
+            const text = el.textContent.toLowerCase();
+            if (text.includes(keyword)) {
+              el.style.display = '';
+              visibleCount++;
+            } else {
+              el.style.display = 'none';
+            }
+          }
+        });
+        if (visibleCount === 0 && keyword) {
+          noResultTip.style.display = 'block';
+        } else {
+          noResultTip.style.display = 'none';
+        }
+      }
+
+      if (searchBtn && searchInput) {
+        searchBtn.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            performSearch();
+          }
+        });
+        searchInput.addEventListener('input', function() {
+          if (searchInput.value.trim() === '') {
+            performSearch();
+          }
+        });
+      }
+    })();
+  </script>
+
+</body>
+  </html>
