@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>91次元官网 - 动漫游戏同人聚合</title>
+  <meta name="description" content="91次元官网汇聚新番动画、游戏速通、同人创作与虚拟主播。提供条目推荐、分类筛选、深度解析与社区评论，帮助二次元爱好者发现值得投入的作品与玩法。">
+  <meta name="keywords" content="新番动画, 游戏速通, 同人创作, 虚拟主播, 二次元社区">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23222'/%3E%3Ctext x='50' y='68' font-size='48' text-anchor='middle' fill='%23ff6b9d' font-family='sans-serif' font-weight='bold'%3E91%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      --bg: #0f0f14;
+      --panel: #1a1a24;
+      --panel-light: #22222e;
+      --border: #2e2e3a;
+      --text: #e8e8f0;
+      --text-muted: #9a9ab0;
+      --primary: #ff6b9d;
+      --primary-dim: #c44d7a;
+      --accent: #6b9dff;
+      --accent-dim: #4a6fd4;
+      --radius: 10px;
+      --radius-sm: 6px;
+      --shadow: 0 4px 16px rgba(0,0,0,.4);
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      --header-height: 64px;
+      --notice-height: 38px;
+      --sticky-offset: calc(var(--header-height) + var(--notice-height) + 10px);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { color: #ff9bbf; }
+    img { max-width: 100%; display: block; }
+    button { font-family: inherit; cursor: pointer; }
+
+    /* 吸顶公告条 */
+    .notice-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: var(--notice-height);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(90deg, #1a0e18, #2a1424, #1a0e18);
+      color: #ffc0d8;
+      font-size: 13px;
+      padding: 0 16px;
+      border-bottom: 1px solid rgba(255,107,157,.2);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .notice-bar strong { color: var(--primary); }
+
+    /* 吸顶页头 */
+    .site-header {
+      position: sticky;
+      top: var(--notice-height);
+      z-index: 99;
+      height: var(--header-height);
+      background: rgba(15,15,20,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 24px;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary), #b84dff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 15px;
+      color: #fff;
+      letter-spacing: -0.5px;
+    }
+    .logo-text {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+    .logo-text span { color: var(--primary); }
+    .header-nav {
+      display: flex;
+      gap: 4px;
+      flex: 1;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .header-nav::-webkit-scrollbar { display: none; }
+    .header-nav a {
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-size: 14px;
+      white-space: nowrap;
+      transition: background .2s, color .2s;
+    }
+    .header-nav a:hover { background: var(--panel-light); color: var(--text); }
+    .header-nav a.active { color: var(--primary); background: rgba(255,107,157,.1); }
+    .header-search {
+      display: flex;
+      align-items: center;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 12px 4px 16px;
+      flex-shrink: 0;
+    }
+    .header-search input {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 13px;
+      width: 120px;
+      outline: none;
+    }
+    .header-search input::placeholder { color: #666; }
+    .header-search button {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 14px;
+      padding: 2px 4px;
+    }
+
+    /* 布局 */
+    .page-wrap {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .layout-3col {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr) 260px;
+      gap: 24px;
+      padding: 24px 0 40px;
+    }
+
+    /* 左侧频道索引 */
+    .channel-index {
+      position: sticky;
+      top: var(--sticky-offset);
+      align-self: start;
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 16px 0;
+      border: 1px solid var(--border);
+    }
+    .channel-index h2 {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      padding: 0 16px 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 6px;
+    }
+    .channel-index a {
+      display: block;
+      padding: 9px 16px;
+      color: var(--text-muted);
+      font-size: 14px;
+      transition: all .15s;
+      border-left: 3px solid transparent;
+    }
+    .channel-index a:hover {
+      color: var(--text);
+      background: var(--panel-light);
+      border-left-color: var(--primary);
+    }
+
+    /* 主内容 */
+    .main-content { min-width: 0; }
+
+    /* 首屏 */
+    .hero {
+      background: linear-gradient(135deg, #1a0e1a 0%, #0f0f14 50%, #12121e 100%);
+      border-radius: var(--radius);
+      padding: 36px 32px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle, rgba(255,107,157,.15), transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      color: #fff;
+      position: relative;
+    }
+    .hero h1 .hl { color: var(--primary); }
+    .hero-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      transition: all .2s;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #ff8ab5; color: #fff; }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* 板块通用 */
+    .section {
+      margin-bottom: 24px;
+      scroll-margin-top: var(--sticky-offset);
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      gap: 12px;
+    }
+    .section-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 18px;
+      background: var(--primary);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .section-more {
+      font-size: 13px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .section-more:hover { color: var(--primary); }
+
+    /* 精选卡片 */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: var(--panel);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: transform .2s, border-color .2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary-dim);
+    }
+    .card-img-wrap {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: var(--panel-light);
+    }
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .3s;
+    }
+    .card:hover .card-img-wrap img { transform: scale(1.04); }
+    .card-tag {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(0,0,0,.65);
+      backdrop-filter: blur(4px);
+      color: var(--primary);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+    .card-body {
+      padding: 12px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.4;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .card-tags span {
+      font-size: 11px;
+      color: var(--text-muted);
+      background: var(--panel-light);
+      padding: 2px 8px;
+      border-radius: 8px;
+    }
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+    .card-meta .score { color: var(--primary); font-weight: 700; }
+
+    /* 紧凑列表 */
+    .compact-list { display: flex; flex-direction: column; gap: 0; }
+    .compact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .compact-item:last-child { border-bottom: none; }
+    .compact-num {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--primary);
+      width: 24px;
+      flex-shrink: 0;
+      text-align: center;
+      line-height: 1.5;
+    }
+    .compact-info { flex: 1; min-width: 0; }
+    .compact-info .name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+    .compact-info .brief {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .compact-time {
+      font-size: 12px;
+      color: #666;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    /* 分类入口 */
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .category-item {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 10px;
+      text-align: center;
+      transition: all .2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .category-item:hover {
+      border-color: var(--primary-dim);
+      background: var(--panel-light);
+    }
+    .category-icon {
+      font-size: 24px;
+      line-height: 1;
+    }
+    .category-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .category-count {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* 深度解析 */
+    .deep-read {
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 28px 30px;
+      border: 1px solid var(--border);
+    }
+    .deep-read h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 22px 0 10px;
+    }
+    .deep-read h3:first-of-type { margin-top: 0; }
+    .deep-read p {
+      font-size: 14px;
+      color: #c8c8d8;
+      margin-bottom: 12px;
+      line-height: 1.8;
+    }
+    .deep-read ul {
+      margin: 8px 0 14px 20px;
+      font-size: 14px;
+      color: #c8c8d8;
+      line-height: 1.8;
+    }
+    .deep-read li { margin-bottom: 4px; }
+
+    /* 体验指南 */
+    .guide-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .guide-step {
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 18px;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .guide-step .step-num {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--primary);
+      opacity: .3;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .guide-step h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .guide-step p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 8px; }
+    .faq-item {
+      background: var(--panel);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .faq-item summary {
+      padding: 14px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      transition: background .2s;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+      content: '+';
+      font-size: 18px;
+      color: var(--primary);
+      flex-shrink: 0;
+      transition: transform .2s;
+    }
+    .faq-item[open] summary::after { transform: rotate(45deg); }
+    .faq-item summary:hover { background: var(--panel-light); }
+    .faq-answer {
+      padding: 0 18px 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+
+    /* 评论 */
+    .comment-list { display: flex; flex-direction: column; gap: 10px; }
+    .comment-item {
+      background: var(--panel);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+    }
+    .comment-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .comment-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2a1a2a, #1a1a2e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--primary);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .comment-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .comment-time { font-size: 11px; color: #666; margin-left: auto; }
+    .comment-text { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+    /* 资讯 */
+    .news-list { display: flex; flex-direction: column; gap: 0; }
+    .news-item {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .news-item:last-child { border-bottom: none; }
+    .news-thumb {
+      width: 100px;
+      height: 68px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--panel-light);
+    }
+    .news-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .news-body { flex: 1; min-width: 0; }
+    .news-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 3px;
+      line-height: 1.4;
+    }
+    .news-summary {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .news-date {
+      font-size: 12px;
+      color: #666;
+      flex-shrink: 0;
+      white-space: nowrap;
+      padding-top: 2px;
+    }
+
+    /* 推荐标签 */
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag-cloud a {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+      transition: all .2s;
+    }
+    .tag-cloud a:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: var(--panel-light);
+    }
+
+    /* 榜单 */
+    .rank-list { display: flex; flex-direction: column; gap: 0; }
+    .rank-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .rank-item:last-child { border-bottom: none; }
+    .rank-badge {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+      background: var(--panel-light);
+      color: var(--text-muted);
+    }
+    .rank-badge.top1 { background: #ffd700; color: #1a1a1a; }
+    .rank-badge.top2 { background: #c0c0c0; color: #1a1a1a; }
+    .rank-badge.top3 { background: #cd7f32; color: #fff; }
+    .rank-name { font-size: 14px; font-weight: 600; color: var(--text); flex: 1; }
+    .rank-score { font-size: 13px; color: var(--primary); font-weight: 700; }
+
+    /* 右侧辅助栏 */
+    .sidebar {
+      position: sticky;
+      top: var(--sticky-offset);
+      align-self: start;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .sidebar-box {
+      background: var(--panel);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 16px;
+    }
+    .sidebar-box h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sidebar-box h3::before {
+      content: '';
+      width: 3px;
+      height: 14px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    .sidebar-box .compact-item { padding: 8px 0; }
+    .sidebar-box .compact-info .name { font-size: 13px; }
+    .sidebar-box .compact-info .brief { font-size: 12px; }
+
+    /* 页尾 */
+    .site-footer {
+      background: #0a0a0f;
+      border-top: 1px solid var(--border);
+      padding: 40px 0 24px;
+      margin-top: 20px;
+    }
+    .footer-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 28px;
+    }
+    .footer-brand .logo-text { font-size: 18px; margin-bottom: 8px; }
+    .footer-brand p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 260px;
+    }
+    .footer-col h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .footer-col a {
+      display: block;
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 4px 0;
+    }
+    .footer-col a:hover { color: var(--primary); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    /* 响应式 */
+    @media (max-width: 1024px) {
+      .layout-3col {
+        grid-template-columns: 1fr 240px;
+      }
+      .channel-index { display: none; }
+      .header-nav { display: none; }
+    }
+    @media (max-width: 740px) {
+      .layout-3col {
+        grid-template-columns: 1fr;
+      }
+      .sidebar { position: static; }
+      .hero { padding: 24px 20px; }
+      .hero h1 { font-size: 24px; }
+      .card-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+      .category-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .header-search { display: none; }
+      .page-wrap { padding: 0 16px; }
+      .site-header { padding: 0 16px; }
+      .news-thumb { width: 72px; height: 50px; }
+    }
+    @media (max-width: 400px) {
+      .card-grid { grid-template-columns: 1fr; }
+      .category-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+  <!-- 吸顶公告条 -->
+  <div class="notice-bar">
+    <span>📢 <strong>本周新增</strong> 47 条同人作品档案 · 秋季新番 12 部已定档 · 速通赛报名进行中</span>
+  </div>
+
+  <!-- 吸顶页头 -->
+  <header class="site-header">
+    <div class="logo-area">
+      <div class="logo-mark">91</div>
+      <div class="logo-text">91次元<span>官网</span></div>
+    </div>
+    <nav class="header-nav" aria-label="主题导航">
+      <a href="#anime" class="active">新番动画</a>
+      <a href="#game">游戏速通</a>
+      <a href="#doujin">同人创作</a>
+      <a href="#vtuber">虚拟主播</a>
+      <a href="#ranking">热门榜单</a>
+      <a href="#deep">深度解析</a>
+    </nav>
+    <div class="header-search">
+      <input type="text" id="searchInput" placeholder="搜索条目…" aria-label="搜索条目">
+      <button id="searchBtn" aria-label="搜索">🔍</button>
+    </div>
+  </header>
+
+  <div class="page-wrap">
+    <div class="layout-3col">
+
+      <!-- 左侧频道索引 -->
+      <aside class="channel-index">
+        <h2>频道索引</h2>
+        <a href="#anime">新番动画</a>
+        <a href="#game">游戏速通</a>
+        <a href="#doujin">同人创作</a>
+        <a href="#vtuber">虚拟主播</a>
+        <a href="#category">分类入口</a>
+        <a href="#deep">深度解析</a>
+        <a href="#guide">体验指南</a>
+        <a href="#faq">常见问题</a>
+        <a href="#comments">用户评论</a>
+        <a href="#news">相关资讯</a>
+        <a href="#recommend">相关推荐</a>
+        <a href="#ranking">热门榜单</a>
+      </aside>
+
+      <!-- 主内容区 -->
+      <main class="main-content">
+
+        <!-- 首屏 -->
+        <section class="hero">
+          <h1>91次元官网</h1>
+          <p class="hero-desc">汇聚 2026 年秋季新番动画、独立游戏速通纪录、同人创作档案与虚拟主播直播日程。从具体条目出发，提供类型标签、看点摘要、评分趋势与社区讨论，帮助二次元爱好者判断值得投入时间的作品与玩法。</p>
+          <div class="hero-cta">
+            <a href="#anime" class="btn btn-primary">浏览新番动画</a>
+            <a href="#ranking" class="btn btn-outline">查看热门榜单</a>
+          </div>
+        </section>
+
+        <!-- 主题领域概览 -->
+        <section class="section" id="overview">
+          <div class="section-header">
+            <h2 class="section-title">二次元内容全景：从新番到速通</h2>
+          </div>
+          <div class="deep-read" style="padding:20px 24px;">
+            <p>2026 年秋季的二次元内容呈现出明显的跨媒介联动特征。新番动画方面，本季共有 12 部作品定档，涵盖异世界转生、悬疑推理、日常治愈三大方向。其中《深渊回响》以非线性叙事和手绘机甲作画引发社区讨论，《放学后的天文台》则凭借细腻的青春群像获得稳定口碑。游戏速通领域，独立游戏《齿轮迷城》在本月诞生了首个 12 分 34 秒的 Any% 纪录，速通社区围绕其地图跳过机制展开了大量路线研究。同人创作板块本周新增 47 条作品档案，以《深渊回响》的配角衍生和《齿轮迷城》的机械设定二创为主。虚拟主播方面，秋季新出道团体「星海计划」的三位成员在 11 月初陆续突破十万关注，其直播内容以歌回和游戏实况为主，与速通社区产生了跨圈互动。这些具体条目与动态构成了当前二次元内容消费的主要图景，也决定了不同兴趣方向的观众需要采取不同的筛选策略。</p>
+          </div>
+        </section>
+
+        <!-- 精选内容推荐 -->
+        <section class="section" id="anime">
+          <div class="section-header">
+            <h2 class="section-title">精选内容推荐</h2>
+            <a href="#ranking" class="section-more">查看完整榜单 →</a>
+          </div>
+          <div class="card-grid">
+            <article class="card">
+              <div class="card-img-wrap">
+                <img src="https://picsum.photos/seed/shenyuan-huixiang01/400/300" alt="深渊回响动画主视觉" width="400" height="300" loading="lazy">
+                <span class="card-tag">新番动画</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">深渊回响</h3>
+                <p class="card-desc">非线性叙事机甲番，第 6 集揭露主角记忆断层真相。手绘作画密度高，每集片尾有概念草图彩蛋。</p>
+                <div class="card-tags"><span>机甲</span><span>悬疑</span><span>手绘</span></div>
+                <div class="card-meta"><span>更新至第 6 集</span><span class="score">9.1</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <div class="card-img-wrap">
+                <img src="https://picsum.photos/seed/fangxue-tianwentai02/400/300" alt="放学后的天文台剧照" width="400" height="300" loading="lazy">
+                <span class="card-tag">新番动画</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">放学后的天文台</h3>
+                <p class="card-desc">青春群像治愈番，以废弃天文台为舞台展开的社团日常。第 5 集星象观测回评价走高。</p>
+                <div class="card-tags"><span>日常</span><span>治愈</span><span>校园</span></div>
+                <div class="card-meta"><span>更新至第 5 集</span><span class="score">8.7</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <div class="card-img-wrap">
+                <img src="https://picsum.photos/seed/chilun-micheng03/400/300" alt="齿轮迷城游戏画面" width="400" height="300" loading="lazy">
+                <span class="card-tag">游戏速通</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">齿轮迷城</h3>
+                <p class="card-desc">独立解谜动作游戏，Any% 速通纪录本月刷新至 12:34。地图跳过路线成为社区研究热点。</p>
+                <div class="card-tags"><span>速通</span><span>解谜</span><span>独立游戏</span></div>
+                <div class="card-meta"><span>纪录 12:34</span><span class="score">8.9</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <div class="card-img-wrap">
+                <img src="https://picsum.photos/seed/xinghai-jihua04/400/300" alt="星海计划虚拟主播团体宣传图" width="400" height="300" loading="lazy">
+                <span class="card-tag">虚拟主播</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">星海计划</h3>
+                <p class="card-desc">秋季新出道三人团体，以歌回和游戏实况为主。11 月 5 日首次跨团联动速通挑战。</p>
+                <div class="card-tags"><span>歌回</span><span>实况</span><span>联动</span></div>
+                <div class="card-meta"><span>今日 20:00 直播</span><span class="score">8.5</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <div class="card-img-wrap">
+                <img src="https://picsum.photos/seed/tongren-dangan05/400/300" alt="同人档案本周新增作品封面" width="400" height="300" loading="lazy">
+                <span class="card-tag">同人创作</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">本周同人档案精选</h3>
+                <p class="card-desc">47 条新档案中，深渊回响配角衍生占 18 条。齿轮迷城机械设定二创以线稿和设定补完为主。</p>
+                <div class="card-tags"><span>二创</span><span>设定补完</span><span>线稿</span></div>
+                <div class="card-meta"><span>本周新增 47 条</span><span class="score">—</span></div>
+              </div>
+            </article>
+            <article class="card">
+              <div class="card-img-wrap">
+                <img src="https://picsum.photos/seed/yinyue-jiqiren06/400/300" alt="音乐机器人动画视觉图" width="400" height="300" loading="lazy">
+                <span class="card-tag">新番动画</span>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">音乐机器人</h3>
+                <p class="card-desc">音乐题材原创动画，第 4 集 Live 场景作画引发讨论。剧中曲目已在流媒体上线。</p>
+                <div class="card-tags"><span>音乐</span><span>原创</span><span>Live</span></div>
+                <div class="card-meta"><span>更新至第 4 集</span><span class="score">8.3</span></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <!-- 最新更新 / 热播动态 -->
+        <section class="section" id="updates">
+          <div class="section-header">
+            <h2 class="section-title">最新更新与热播动态</h2>
+          </div>
+          <div class="compact-list">
+            <div class="compact-item">
+              <span class="compact-num">01</span>
+              <div class="compact-info">
+                <div class="name">深渊回响 第 6 集</div>
+                <div class="brief">“记忆断层”已上线，片尾概念草图更新至 14 张</div>
+              </div>
+              <span class="compact-time">今天 10:00</span>
+            </div>
+            <div class="compact-item">
+              <span class="compact-num">02</span>
+              <div class="compact-info">
+                <div class="name">齿轮迷城 Any% 速通</div>
+                <div class="brief">玩家「齿轮不转」刷新纪录至 12:34，路线解析已发布</div>
+              </div>
+              <span class="compact-time">今天 08:30</span>
+            </div>
+            <div class="compact-item">
+              <span class="compact-num">03</span>
+              <div class="compact-info">
+                <div class="name">星海计划·联动直播</div>
+                <div class="brief">今晚 20:00 三位成员挑战齿轮迷城速通，预计 2 小时</div>
+              </div>
+              <span class="compact-time">今天 20:00</span>
+            </div>
+            <div class="compact-item">
+              <span class="compact-num">04</span>
+              <div class="compact-info">
+                <div class="name">放学后的天文台 第 5 集</div>
+                <div class="brief">星象观测回已上线，社区评分升至 8.7</div>
+              </div>
+              <span class="compact-time">昨天 22:00</span>
+            </div>
+            <div class="compact-item">
+              <span class="compact-num">05</span>
+              <div class="compact-info">
+                <div class="name">同人档案批量解封</div>
+                <div class="brief">本周新增 47 条，深渊回响配角衍生 18 条已通过审核</div>
+              </div>
+              <span class="compact-time">昨天 18:00</span>
+            </div>
+            <div class="compact-item">
+              <span class="compact-num">06</span>
+              <div class="compact-info">
+                <div class="name">音乐机器人 剧中曲上线</div>
+                <div class="brief">第 4 集 Live 曲目《齿轮与星尘》已在流媒体发布</div>
+              </div>
+              <span class="compact-time">11 月 6 日</span>
+            </div>
+            <div class="compact-item">
+              <span class="compact-num">07</span>
+              <div class="compact-info">
+                <div class="name">秋季速通赛报名开启</div>
+                <div class="brief">齿轮迷城与像素地牢双项目，报名截止 11 月 15 日</div>
+              </div>
+              <span class="compact-time">11 月 5 日</span>
+            </div>
+            <div class="compact-item">
+              <span class="compact-num">08</span>
+              <div class="compact-info">
+                <div class="name">深渊回响 原声集预售</div>
+                <div class="brief">含 24 首剧中曲与 6 首未使用曲，11 月 20 日发货</div>
+              </div>
+              <span class="compact-time">11 月 4 日</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 分类入口 -->
+        <section class="section" id="category">
+          <div class="section-header">
+            <h2 class="section-title">分类入口</h2>
+          </div>
+          <div class="category-grid">
+            <a href="#anime" class="category-item">
+              <span class="category-icon">📺</span>
+              <span class="category-name">新番动画</span>
+              <span class="category-count">12 部在播</span>
+            </a>
+            <a href="#game" class="category-item">
+              <span class="category-icon">🎮</span>
+              <span class="category-name">游戏速通</span>
+              <span class="category-count">8 项纪录</span>
+            </a>
+            <a href="#doujin" class="category-item">
+              <span class="category-icon">✏️</span>
+              <span class="category-name">同人创作</span>
+              <span class="category-count">47 条新增</span>
+            </a>
+            <a href="#vtuber" class="category-item">
+              <span class="category-icon">🎤</span>
+              <span class="category-name">虚拟主播</span>
+              <span class="category-count">6 场直播</span>
+            </a>
+            <a href="#ranking" class="category-item">
+              <span class="category-icon">🏆</span>
+              <span class="category-name">热门榜单</span>
+              <span class="category-count">实时更新</span>
+            </a>
+            <a href="#deep" class="category-item">
+              <span class="category-icon">🔍</span>
+              <span class="category-name">深度解析</span>
+              <span class="category-count">3 篇长文</span>
+            </a>
+            <a href="#comments" class="category-item">
+              <span class="category-icon">💬</span>
+              <span class="category-name">社区评论</span>
+              <span class="category-count">16 条讨论</span>
+            </a>
+            <a href="#news" class="category-item">
+              <span class="category-icon">📰</span>
+              <span class="category-name">相关资讯</span>
+              <span class="category-count">6 条动态</span>
+            </a>
+          </div>
+        </section>
+
+        <!-- 深度解析 -->
+        <section class="section" id="deep">
+          <div class="section-header">
+            <h2 class="section-title">深度解析：2026 秋季二次元内容消费指南</h2>
+          </div>
+          <div class="deep-read">
+            <h3>新番动画的类型分化与筛选逻辑</h3>
+            <p>本季 12 部新番在类型上呈现出明显的“两极分化”特征：一端是《深渊回响》这类高密度叙事作品，单集信息量接近剧场版规格，观众需要暂停回看才能捕捉全部伏笔；另一端是《放学后的天文台》为代表的慢节奏日常番，单集推进幅度小，但情绪积累绵密。两者对观看场景的要求截然不同——前者适合专注的整块时间，后者更适合碎片化放松。判断一部新番是否值得追更，可以先看前三集的“信息密度曲线”：如果每集结尾都产生新的未解疑问，且疑问之间有逻辑关联，说明作品有长线布局；如果前三集仍在重复建立同一个冲突，则后续展开可能乏力。</p>
+            <h3>游戏速通的纪录含金量与路线逻辑</h3>
+            <p>《齿轮迷城》的 12:34 Any% 纪录之所以引发关注，核心在于其路线设计打破了此前“全齿轮收集”的惯性思路。当前纪录保持者采用“三齿轮跳关”策略，利用地图边缘的碰撞判定跳过两个中继区域，将流程缩短约 4 分钟。判断一个速通纪录的含金量，可以看三个维度：路线是否具有可复现性（而非依赖随机数）、操作难度是否集中在可练习的段位、以及该纪录与第二名的差距是否在合理波动范围内。齿轮迷城当前前三名差距在 40 秒以内，说明竞争激烈且路线尚未被完全挖掘，仍有优化空间。</p>
+            <h3>同人创作档案的筛选与消费路径</h3>
+            <p>本周新增的 47 条同人档案中，可以按“设定补完型”和“关系延伸型”两类来区分。设定补完型以《齿轮迷城》的机械设定二创为主，作者通常会附上详细的齿轮传动比和材质说明，适合对世界观构建感兴趣的读者；关系延伸型则集中在《深渊回响》的配角衍生，侧重角色前史和未在正片中展开的互动。筛选时可以先看档案的“完成度标签”——标注“全彩/多页/设定图”的条目通常投入了更多制作时间，而“速写/短篇”类更适合快速浏览。两类内容没有优劣之分，取决于当前是想深入某个设定还是单纯补充角色情感。</p>
+            <h3>虚拟主播的直播内容与跨圈联动</h3>
+            <p>「星海计划」的三人团体在内容定位上有意做了区分：成员 A 主打歌回和翻唱，成员 B 侧重游戏实况（尤其是速通类），成员 C 则以杂谈和观众互动为主。这种分工让团体在单一平台内覆盖了多种消费场景。11 月 5 日的跨团速通联动之所以值得关注，是因为它把虚拟主播的“实时反应”与速通游戏的“精确操作”结合在了一起——观众既能看到主播的操作失误和临场调整，也能听到针对具体关卡的即时解说。对于不熟悉速通的新观众，这类联动直播是比较友好的入门场景，比纯技术向的纪录视频更容易理解。</p>
+          </div>
+        </section>
+
+        <!-- 体验指南 -->
+        <section class="section" id="guide">
+          <div class="section-header">
+            <h2 class="section-title">体验指南：内容消费的顺序与判断依据</h2>
+          </div>
+          <div class="guide-steps">
+            <div class="guide-step">
+              <div class="step-num">01</div>
+              <h4>先确定消费场景</h4>
+              <p>整块时间优先选择叙事密度高的新番（如深渊回响）；碎片时间适合日常番或速通纪录视频。场景决定内容形态。</p>
+            </div>
+            <div class="guide-step">
+              <div class="step-num">02</div>
+              <h4>用前三集判断追更价值</h4>
+              <p>新番看前三集是否产生关联性疑问；速通看路线是否有可复现逻辑；同人档案看完成度标签是否匹配阅读预期。</p>
+            </div>
+            <div class="guide-step">
+              <div class="step-num">03</div>
+              <h4>对比同类条目的差异点</h4>
+              <p>同为机甲番，深渊回响重悬疑叙事、音乐机器人重情绪演出；同为速通项目，齿轮迷城看路线、像素地牢看操作精度。</p>
+            </div>
+            <div class="guide-step">
+              <div class="step-num">04</div>
+              <h4>关注社区讨论的焦点</h4>
+              <p>评论区和资讯中反复出现的具体话题（如“第 6 集记忆断层”“三齿轮跳关”）往往是判断内容质量的高效线索。</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section" id="faq">
+          <div class="section-header">
+            <h2 class="section-title">常见问题</h2>
+          </div>
+          <div class="faq-list">
+            <details class="faq-item">
+              <summary>深渊回响第 6 集结尾的“记忆断层”是什么意思？</summary>
+              <div class="faq-answer">第 6 集结尾揭示主角的童年记忆存在人为植入的断层，具体表现为三段互斥的回忆画面。结合前五集埋下的“齿轮印记”线索，断层很可能与反派组织的记忆改造技术有关。片尾概念草图中有三张未在正片出现的画面，暗示了被删除记忆的原始内容。</div>
+            </details>
+            <details class="faq-item">
+              <summary>齿轮迷城 Any% 速通的三齿轮跳关路线怎么练？</summary>
+              <div class="faq-answer">核心是在第二个中继区域边缘利用碰撞判定跳过两个齿轮房间。建议先在练习模式中单独练习“边缘三连跳”段位，稳定率达到 90% 以上再串联全程。当前纪录保持者的路线解析视频已标注了每个跳跃点的帧数窗口，可作为参考。</div>
+            </details>
+            <details class="faq-item">
+              <summary>星海计划的直播一般多久一场？</summary>
+              <div class="faq-answer">团体常规直播为每周二、四、六晚 20:00，单场时长 2 至 3 小时。成员单独直播频率更高，成员 B 的速通练习场通常在周末下午加播。跨团联动属于不定期活动，本月已知的是 11 月 8 日晚的速通挑战。</div>
+            </details>
+            <details class="faq-item">
+              <summary>放学后的天文台和深渊回响先看哪个比较好？</summary>
+              <div class="faq-answer">取决于当前想看的内容密度。如果希望被高信息量的叙事抓住，从深渊回响开始；如果更想放松、感受日常氛围，选放学后的天文台。两部作品类型差异很大，并不存在观看顺序上的依赖，可以按心情交替进行。</div>
+            </details>
+            <details class="faq-item">
+              <summary>同人档案的“设定补完型”和“关系延伸型”有什么区别？</summary>
+              <div class="faq-answer">设定补完型侧重世界观细节，比如齿轮迷城的机械结构、能源系统等，通常附有图示和技术说明；关系延伸型侧重角色之间的互动和前史，常见于深渊回响的配角衍生。前者适合考据向读者，后者适合角色向读者。</div>
+            </details>
+            <details class="faq-item">
+              <summary>秋季速通赛的报名条件和比赛项目有哪些？</summary>
+              <div class="faq-answer">比赛设齿轮迷城 Any% 和像素地牢 100% 两个项目，报名截止 11 月 15 日，无段位门槛但需要提交一段过往速通录像作为参考。比赛在线上进行，初赛为录像提交，决赛为直播对战。具体规则可在相关资讯板块查看。</div>
+            </details>
+          </div>
+        </section>
+
+        <!-- 用户评论 -->
+        <section class="section" id="comments">
+          <div class="section-header">
+            <h2 class="section-title">用户评论</h2>
+          </div>
+          <div class="comment-list">
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">深</div>
+                <span class="comment-name">深渊观测者</span>
+                <span class="comment-time">今天 11:20</span>
+              </div>
+              <p class="comment-text">第 6 集结尾那三张概念草图信息量太大了，反复看了好几遍。齿轮印记和记忆断层应该是一条线，但中间还缺一块拼图。</p>
+            </div>
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">齿</div>
+                <span class="comment-name">齿轮不转</span>
+                <span class="comment-time">今天 09:45</span>
+              </div>
+              <p class="comment-text">12:34 这个纪录估计撑不过两周，第三个齿轮房间的碰撞判定还有优化空间，我尝试在 11 月 10 日前刷出新路线。</p>
+            </div>
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">星</div>
+                <span class="comment-name">星海观测站</span>
+                <span class="comment-time">今天 08:12</span>
+              </div>
+              <p class="comment-text">今晚的联动直播终于要来了，成员 B 之前练齿轮迷城练到凌晨，不知道实战会是什么水平。</p>
+            </div>
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">天</div>
+                <span class="comment-name">天文台常客</span>
+                <span class="comment-time">昨天 23:30</span>
+              </div>
+              <p class="comment-text">放学后的天文台第 5 集的星象画面太美了，分镜节奏比前几集更稳，感觉制作组找到了自己的呼吸感。</p>
+            </div>
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">线</div>
+                <span class="comment-name">线稿收集者</span>
+                <span class="comment-time">昨天 21:15</span>
+              </div>
+              <p class="comment-text">本周齿轮迷城的机械设定二创质量很高，有几张传动比示意图画得比官方设定集还细。</p>
+            </div>
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">音</div>
+                <span class="comment-name">音乐机器人循环中</span>
+                <span class="comment-time">昨天 19:40</span>
+              </div>
+              <p class="comment-text">《齿轮与星尘》单曲循环一下午了，第 4 集 Live 的作画确实加分，但曲子本身单独听也很完整。</p>
+            </div>
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">速</div>
+                <span class="comment-name">速通新手阿凯</span>
+                <span class="comment-time">11 月 6 日</span>
+              </div>
+              <p class="comment-text">刚入坑齿轮迷城速通，三齿轮跳关练了一晚上成功率才三成，不过比想象中好上手，至少路线是清晰的。</p>
+            </div>
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">配</div>
+                <span class="comment-name">配角研究所</span>
+                <span class="comment-time">11 月 6 日</span>
+              </div>
+              <p class="comment-text">深渊回响的配角衍生同人这周多了好多，有个写第三小队副队长前史的短篇完成度很高，推荐。</p>
+            </div>
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">星</div>
+                <span class="comment-name">星海计划推</span>
+                <span class="comment-time">11 月 5 日</span>
+              </div>
+              <p class="comment-text">跨团联动比预想中自然，速通解说和主播反应结合得不错，对不玩速通的人来说也没有门槛。</p>
+            </div>
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">原</div>
+                <span class="comment-name">原声集预定+1</span>
+                <span class="comment-time">11 月 5 日</span>
+              </div>
+              <p class="comment-text">深渊回响原声集有 6 首未使用曲，这个比较少见，希望不是那种短片段凑数的。</p>
+            </div>
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">机</div>
+                <span class="comment-name">机甲作画厨</span>
+                <span class="comment-time">11 月 4 日</span>
+              </div>
+              <p class="comment-text">深渊回响第 4 集的机甲格斗作画是手绘的，张数不是特别高但动态很扎实，比纯 CG 更有重量感。</p>
+            </div>
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">日</div>
+                <span class="comment-name">日常番爱好者</span>
+                <span class="comment-time">11 月 4 日</span>
+              </div>
+              <p class="comment-text">天文台这种节奏现在反而难找，不赶剧情、不硬塞冲突，每周看一集像真的在社团里坐了一会儿。</p>
+            </div>
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">图</div>
+                <span class="comment-name">地图研究小组</span>
+                <span class="comment-time">11 月 3 日</span>
+              </div>
+              <p class="comment-text">齿轮迷城那个边缘三连跳的判定窗口比看起来宽，关键是起跳位置要贴住碰撞体，而不是按节奏跳。</p>
+            </div>
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">歌</div>
+                <span class="comment-name">歌回打卡</span>
+                <span class="comment-time">11 月 3 日</span>
+              </div>
+              <p class="comment-text">星海计划成员 A 的歌回选曲跨度挺大，上周唱了老番主题曲，这周又切到新番片尾，追起来不腻。</p>
+            </div>
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">赛</div>
+                <span class="comment-name">比赛报名中</span>
+                <span class="comment-time">11 月 2 日</span>
+              </div>
+              <p class="comment-text">秋季速通赛两个项目都报了，像素地牢 100% 的路线比齿轮迷城长很多，准备时间要留够。</p>
+            </div>
+            <div class="comment-item">
+              <div class="comment-head">
+                <div class="comment-avatar">草</div>
+                <span class="comment-name">草图彩蛋猎人</span>
+                <span class="comment-time">11 月 2 日</span>
+              </div>
+              <p class="comment-text">深渊回响每集片尾的草图更新数量不一样，第 6 集给了 14 张，是目前最多的一次，里面还有一张分镜废稿。</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 相关资讯 -->
+        <section class="section" id="news">
+          <div class="section-header">
+            <h2 class="section-title">相关资讯</h2>
+          </div>
+          <div class="news-list">
+            <div class="news-item">
+              <div class="news-thumb">
+                <img src="https://picsum.photos/seed/news-shenyuan07/600/400" alt="深渊回响第6集上线资讯配图" width="100" height="68" loading="lazy">
+              </div>
+              <div class="news-body">
+                <div class="news-title">深渊回响第 6 集上线，记忆断层线索引发社区考据</div>
+                <p class="news-summary">片尾概念草图新增 14 张，其中三张未在正片出现的画面成为讨论焦点。</p>
+              </div>
+              <span class="news-date">11 月 8 日</span>
+            </div>
+            <div class="news-item">
+              <div class="news-thumb">
+                <img src="https://picsum.photos/seed/news-chilun08/600/400" alt="齿轮迷城速通纪录刷新资讯配图" width="100" height="68" loading="lazy">
+              </div>
+              <div class="news-body">
+                <div class="news-title">齿轮迷城 Any% 纪录刷新至 12:34，三齿轮跳关路线公开</div>
+                <p class="news-summary">路线解析视频已发布，前三名差距缩小至 40 秒以内，竞争进入白热化。</p>
+              </div>
+              <span class="news-date">11 月 8 日</span>
+            </div>
+            <div class="news-item">
+              <div class="news-thumb">
+                <img src="https://picsum.photos/seed/news-xinghai09/600/400" alt="星海计划联动直播预告资讯配图" width="100" height="68" loading="lazy">
+              </div>
+              <div class="news-body">
+                <div class="news-title">星海计划今晚 20:00 联动直播，挑战齿轮迷城速通</div>
+                <p class="news-summary">三位成员将接力完成速通挑战，成员 B 此前已练习该游戏超过 30 小时。</p>
+              </div>
+              <span class="news-date">11 月 8 日</span>
+            </div>
+            <div class="news-item">
+              <div class="news-thumb">
+                <img src="https://picsum.photos/seed/news-doujin10/600/400" alt="本周同人档案新增资讯配图" width="100" height="68" loading="lazy">
+              </div>
+              <div class="news-body">
+                <div class="news-title">本周同人档案新增 47 条，深渊回响配角衍生占近四成</div>
+                <p class="news-summary">设定补完型档案中，齿轮迷城机械结构二创的平均完成度最高。</p>
+              </div>
+              <span class="news-date">11 月 7 日</span>
+            </div>
+            <div class="news-item">
+              <div class="news-thumb">
+                <img src="https://picsum.photos/seed/news-saishi11/600/400" alt="秋季速通赛报名开启资讯配图" width="100" height="68" loading="lazy">
+              </div>
+              <div class="news-body">
+                <div class="news-title">秋季速通赛报名开启，设齿轮迷城与像素地牢双项目</div>
+                <p class="news-summary">报名截止 11 月 15 日，初赛录像提交，决赛直播对战，无段位门槛。</p>
+              </div>
+              <span class="news-date">11 月 5 日</span>
+            </div>
+            <div class="news-item">
+              <div class="news-thumb">
+                <img src="https://picsum.photos/seed/news-yinyue12/600/400" alt="音乐机器人剧中曲上线资讯配图" width="100" height="68" loading="lazy">
+              </div>
+              <div class="news-body">
+                <div class="news-title">音乐机器人第 4 集 Live 曲《齿轮与星尘》上线流媒体</div>
+                <p class="news-summary">完整版时长 4 分 12 秒，编曲加入手风琴与电子鼓的混合音色。</p>
+              </div>
+              <span class="news-date">11 月 4 日</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- 相关推荐 -->
+        <section class="section" id="recommend">
+          <div class="section-header">
+            <h2 class="section-title">相关推荐</h2>
+          </div>
+          <div class="tag-cloud">
+            <a href="#anime">异世界转生新番</a>
+            <a href="#anime">手绘机甲作画</a>
+            <a href="#game">像素地牢 100% 速通</a>
+            <a href="#game">平台跳跃类速通路线</a>
+            <a href="#doujin">深渊回响配角前史同人</a>
+            <a href="#doujin">机械设定补完档案</a>
+            <a href="#vtuber">歌回翻唱选曲</a>
+            <a href="#vtuber">速通实况联动</a>
+          </div>
+        </section>
+
+        <!-- 热门榜单 -->
+        <section class="section" id="ranking">
+          <div class="section-header">
+            <h2 class="section-title">热门榜单</h2>
+          </div>
+          <div class="rank-list">
+            <div class="rank-item">
+              <span class="rank-badge top1">1</span>
+              <span class="rank-name">深渊回响</span>
+              <span class="rank-score">9.1</span>
+            </div>
+            <div class="rank-item">
+              <span class="rank-badge top2">2</span>
+              <span class="rank-name">齿轮迷城</span>
+              <span class="rank-score">8.9</span>
+            </div>
+            <div class="rank-item">
+              <span class="rank-badge top3">3</span>
+              <span class="rank-name">放学后的天文台</span>
+              <span class="rank-score">8.7</span>
+            </div>
+            <div class="rank-item">
+              <span class="rank-badge">4</span>
+              <span class="rank-name">星海计划</span>
+              <span class="rank-score">8.5</span>
+            </div>
+            <div class="rank-item">
+              <span class="rank-badge">5</span>
+              <span class="rank-name">音乐机器人</span>
+              <span class="rank-score">8.3</span>
+            </div>
+            <div class="rank-item">
+              <span class="rank-badge">6</span>
+              <span class="rank-name">像素地牢</span>
+              <span class="rank-score">8.2</span>
+            </div>
+            <div class="rank-item">
+              <span class="rank-badge">7</span>
+              <span class="rank-name">异世界食堂 第二季</span>
+              <span class="rank-score">8.0</span>
+            </div>
+            <div class="rank-item">
+              <span class="rank-badge">8</span>
+              <span class="rank-name">星轨观测者</span>
+              <span class="rank-score">7.8</span>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- 右侧辅助栏 -->
+      <aside class="sidebar">
+        <div class="sidebar-box">
+          <h3>今日更新速览</h3>
+          <div class="compact-list">
+            <div class="compact-item">
+              <div class="compact-info">
+                <div class="name">深渊回响 第 6 集</div>
+                <div class="brief">记忆断层 · 概念草图 14 张</div>
+              </div>
+            </div>
+            <div class="compact-item">
+              <div class="compact-info">
+                <div class="name">齿轮迷城速通 12:34</div>
+                <div class="brief">三齿轮跳关路线公开</div>
+              </div>
+            </div>
+            <div class="compact-item">
+              <div class="compact-info">
+                <div class="name">星海计划联动直播</div>
+                <div class="brief">今晚 20:00 速通挑战</div>
+              </div>
+            </div>
+            <div class="compact-item">
+              <div class="compact-info">
+                <div class="name">同人档案新增 47 条</div>
+                <div class="brief">配角衍生占 18 条</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-box">
+          <h3>热门标签</h3>
+          <div class="tag-cloud">
+            <a href="#anime">新番</a>
+            <a href="#game">速通</a>
+            <a href="#doujin">同人</a>
+            <a href="#vtuber">虚拟主播</a>
+            <a href="#ranking">榜单</a>
+          </div>
+        </div>
+
+        <div class="sidebar-box">
+          <h3>即将到来</h3>
+          <div class="compact-list">
+            <div class="compact-item">
+              <div class="compact-info">
+                <div class="name">秋季速通赛报名截止</div>
+                <div class="brief">11 月 15 日 · 还剩 7 天</div>
+              </div>
+            </div>
+            <div class="compact-item">
+              <div class="compact-info">
+                <div class="name">深渊回响原声集发货</div>
+                <div class="brief">11 月 20 日 · 预售中</div>
+              </div>
+            </div>
+            <div class="compact-item">
+              <div class="compact-info">
+                <div class="name">放学后的天文台第 6 集</div>
+                <div class="brief">11 月 10 日 22:00</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- 页尾 -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-text">91次元<span>官网</span></div>
+          <p>聚合新番动画、游戏速通、同人创作与虚拟主播的二次元内容门户，以具体条目和类型标签为核心，提供可判断的消费参考。</p>
+        </div>
+        <div class="footer-col">
+          <h4>内容频道</h4>
+          <a href="#anime">新番动画</a>
+          <a href="#game">游戏速通</a>
+          <a href="#doujin">同人创作</a>
+          <a href="#vtuber">虚拟主播</a>
+        </div>
+        <div class="footer-col">
+          <h4>发现更多</h4>
+          <a href="#ranking">热门榜单</a>
+          <a href="#deep">深度解析</a>
+          <a href="#guide">体验指南</a>
+          <a href="#faq">常见问题</a>
+        </div>
+        <div class="footer-col">
+          <h4>社区</h4>
+          <a href="#comments">用户评论</a>
+          <a href="#news">相关资讯</a>
+          <a href="#recommend">相关推荐</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 91次元官网 · 内容聚合示例</span>
+        <span>部分内容为示例数据，仅用于展示页面结构</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 搜索筛选：在当前页面内容中查找条目
+    (function() {
+      const input = document.getElementById('searchInput');
+      const btn = document.getElementById('searchBtn');
+      if (!input || !btn) return;
+
+      function doSearch() {
+        const q = input.value.trim().toLowerCase();
+        if (!q) return;
+        // 收集所有可搜索条目（卡片标题、紧凑列表名称、FAQ 问题）
+        const selectors = '.card-title, .compact-info .name, .faq-item summary, .rank-name, .news-title';
+        const items = document.querySelectorAll(selectors);
+        let firstMatch = null;
+        items.forEach(el => {
+          const text = el.textContent.toLowerCase();
+          if (text.includes(q) && !firstMatch) {
+            firstMatch = el;
+          }
+        });
+        if (firstMatch) {
+          firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          firstMatch.style.outline = '2px solid var(--primary)';
+          firstMatch.style.outlineOffset = '2px';
+          setTimeout(() => {
+            firstMatch.style.outline = '';
+            firstMatch.style.outlineOffset = '';
+          }, 2000);
+        } else {
+          alert('未找到包含“' + input.value.trim() + '”的内容条目');
+        }
+      }
+
+      btn.addEventListener('click', doSearch);
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') doSearch();
+      });
+    })();
+  </script>
+</body>
+                  </html>
