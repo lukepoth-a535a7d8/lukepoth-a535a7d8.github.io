@@ -1,0 +1,994 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>91短剧网页版 - 短剧类型与观看指南</title>
+<meta name="description" content="91短剧网页版聚合都市逆袭、古装甜宠、悬疑反转等短剧类型，提供分集更新动态、深度解析、消费路径与常见问题，适合想快速挑选短剧的观众。">
+<meta name="keywords" content="短剧类型,分集更新,都市逆袭短剧,古装甜宠剧,悬疑反转短剧">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231c1b2e'/%3E%3Cpath d='M18 20h20a8 8 0 0 1 8 8v16H26a8 8 0 0 1-8-8z' fill='%23ff6b5e'/%3E%3Cpath d='M28 28l12 6-12 6z' fill='%23fff3e8'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f6f4f0;
+  --panel:#ffffff;
+  --panel-soft:#fbf8f3;
+  --ink:#1d1b26;
+  --ink-2:#4a4658;
+  --ink-3:#7c7689;
+  --line:#e5dfd6;
+  --line-strong:#d3cabc;
+  --brand:#e2503f;
+  --brand-deep:#b8342a;
+  --brand-soft:#fde9e4;
+  --accent:#1f7a6b;
+  --accent-soft:#e2f2ee;
+  --gold:#b9821f;
+  --gold-soft:#fbf0d9;
+  --radius:14px;
+  --radius-sm:9px;
+  --shadow:0 1px 2px rgba(29,27,38,.05),0 6px 20px rgba(29,27,38,.06);
+  --shadow-lift:0 2px 4px rgba(29,27,38,.06),0 14px 34px rgba(29,27,38,.1);
+  --font:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+  --sticky-h:104px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:var(--sticky-h)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.72;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{margin:0;line-height:1.35;font-weight:700}
+p{margin:0 0 12px}
+ul,ol{margin:0;padding:0;list-style:none}
+button{font-family:inherit;cursor:pointer}
+
+/* ---------- 吸顶区 ---------- */
+.sticky-stack{position:sticky;top:0;z-index:60}
+.notice-bar{
+  background:linear-gradient(90deg,#1d1b26,#332f45 55%,#1d1b26);
+  color:#f6efe6;font-size:13px;letter-spacing:.2px;
+  display:flex;align-items:center;gap:12px;justify-content:center;
+  padding:8px 16px;min-height:36px;
+}
+.notice-bar .dot{width:7px;height:7px;border-radius:50%;background:var(--brand);flex:0 0 auto;box-shadow:0 0 0 3px rgba(226,80,63,.25)}
+.notice-bar strong{color:#ffd9a8;font-weight:600}
+.notice-bar a{color:#ffe0bd;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+
+.site-header{
+  background:rgba(255,255,255,.94);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;gap:20px;
+  padding:10px 26px;min-height:66px;flex-wrap:wrap;
+}
+.brand{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.brand-mark{width:38px;height:38px;flex:0 0 auto}
+.brand-text{font-size:19px;font-weight:800;letter-spacing:.3px;white-space:nowrap}
+.brand-text span{color:var(--brand)}
+.header-nav{display:flex;gap:4px;flex-wrap:wrap;flex:1 1 auto}
+.header-nav a{
+  font-size:13.5px;padding:6px 11px;border-radius:999px;color:var(--ink-2);
+  transition:.18s;white-space:nowrap;
+}
+.header-nav a:hover,.header-nav a:focus-visible{background:var(--brand-soft);color:var(--brand-deep);outline:none}
+.header-nav a:focus-visible{box-shadow:0 0 0 2px var(--brand)}
+.header-actions{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.search-wrap{position:relative;display:flex;align-items:center}
+.search-wrap input{
+  width:190px;padding:8px 12px 8px 32px;border:1px solid var(--line-strong);
+  border-radius:999px;font-size:13.5px;background:var(--panel-soft);color:var(--ink);
+  transition:.18s;
+}
+.search-wrap input:focus{outline:none;border-color:var(--brand);background:#fff;box-shadow:0 0 0 3px rgba(226,80,63,.14);width:220px}
+.search-wrap svg{position:absolute;left:11px;width:15px;height:15px;stroke:var(--ink-3);fill:none;stroke-width:2}
+.btn-primary{
+  background:var(--brand);color:#fff;border:none;border-radius:999px;
+  padding:9px 18px;font-size:13.5px;font-weight:600;transition:.18s;white-space:nowrap;
+}
+.btn-primary:hover{background:var(--brand-deep)}
+.btn-primary:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* ---------- 首屏 ---------- */
+.hero{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(900px 320px at 12% -10%,rgba(226,80,63,.18),transparent 60%),
+    radial-gradient(700px 300px at 92% 0%,rgba(31,122,107,.16),transparent 62%),
+    linear-gradient(160deg,#fffaf4,#f2eee7 70%,#eee7dc);
+  border-bottom:1px solid var(--line);
+}
+.hero-inner{
+  max-width:1320px;margin:0 auto;padding:52px 26px 46px;
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:44px;align-items:center;
+}
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;
+  color:var(--brand-deep);background:var(--brand-soft);border:1px solid rgba(226,80,63,.22);
+  padding:5px 13px;border-radius:999px;margin-bottom:16px;letter-spacing:.3px;
+}
+.hero h1{font-size:clamp(30px,4.2vw,46px);letter-spacing:-.5px;font-weight:800;margin-bottom:14px}
+.hero h1 em{font-style:normal;color:var(--brand);position:relative}
+.hero-lead{font-size:16px;color:var(--ink-2);max-width:52ch;margin-bottom:22px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+.btn-ghost{
+  border:1px solid var(--line-strong);background:#fff;color:var(--ink);
+  border-radius:999px;padding:9px 18px;font-size:13.5px;font-weight:600;transition:.18s;
+}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand-deep)}
+.btn-ghost:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.hero-stats{display:flex;gap:28px;flex-wrap:wrap}
+.hero-stats div{min-width:96px}
+.hero-stats b{display:block;font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.3px}
+.hero-stats small{font-size:12.5px;color:var(--ink-3)}
+.hero-visual{position:relative;min-height:300px}
+.hero-card{
+  position:absolute;background:#fff;border:1px solid var(--line);border-radius:16px;
+  box-shadow:var(--shadow-lift);padding:14px;width:230px;
+}
+.hero-card.c1{top:6px;left:0;transform:rotate(-3.2deg);z-index:2}
+.hero-card.c2{top:96px;right:0;transform:rotate(2.6deg);z-index:3;width:210px}
+.hero-card.c3{bottom:-6px;left:52px;transform:rotate(1.4deg);z-index:1;width:196px;opacity:.96}
+.hero-thumb{border-radius:10px;overflow:hidden;margin-bottom:9px;background:#eee}
+.hero-thumb img{width:100%;height:100%;object-fit:cover}
+.hero-card.c1 .hero-thumb{height:104px}
+.hero-card.c2 .hero-thumb{height:92px}
+.hero-card.c3 .hero-thumb{height:78px}
+.hero-card h4{font-size:13.5px;margin-bottom:3px}
+.hero-card p{font-size:11.5px;color:var(--ink-3);margin:0;line-height:1.5}
+.hero-badge{
+  position:absolute;top:14px;right:16px;z-index:5;background:var(--accent);color:#fff;
+  font-size:11.5px;font-weight:700;padding:5px 11px;border-radius:999px;box-shadow:var(--shadow);
+}
+
+/* ---------- 布局 ---------- */
+.layout{
+  max-width:1320px;margin:0 auto;padding:34px 26px 60px;
+  display:grid;grid-template-columns:186px minmax(0,1fr) 254px;gap:28px;align-items:start;
+}
+.channel-col{position:sticky;top:calc(var(--sticky-h) + 20px);align-self:start}
+.channel-box{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px 12px;box-shadow:var(--shadow)}
+.channel-box h2{font-size:12px;letter-spacing:1.6px;color:var(--ink-3);font-weight:700;padding:2px 8px 10px;text-transform:uppercase}
+.channel-box ul{display:flex;flex-direction:column;gap:2px}
+.channel-box a{
+  display:flex;align-items:center;justify-content:space-between;gap:6px;
+  padding:8px 10px;border-radius:var(--radius-sm);font-size:13.5px;color:var(--ink-2);
+  transition:.16s;
+}
+.channel-box a:hover{background:var(--brand-soft);color:var(--brand-deep)}
+.channel-box a:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
+.channel-box a em{font-style:normal;font-size:11px;color:var(--ink-3);background:var(--panel-soft);border:1px solid var(--line);padding:0 6px;border-radius:999px}
+.channel-box .ch-sep{height:1px;background:var(--line);margin:9px 6px}
+
+.main-col{min-width:0}
+.side-col{position:sticky;top:calc(var(--sticky-h) + 20px);align-self:start;display:flex;flex-direction:column;gap:18px}
+
+/* ---------- 通用板块 ---------- */
+.section{margin-bottom:38px;scroll-margin-top:var(--sticky-h)}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.section-head h2{font-size:21px;letter-spacing:-.2px;display:flex;align-items:center;gap:9px}
+.section-head h2::before{content:"";width:4px;height:19px;border-radius:2px;background:var(--brand);display:inline-block}
+.section-head .sub{font-size:12.5px;color:var(--ink-3)}
+.section-head .more{font-size:12.5px;color:var(--brand-deep);font-weight:600;border-bottom:1px dashed rgba(226,80,63,.45);white-space:nowrap}
+.section-head .more:hover{color:var(--brand)}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.pad{padding:20px 22px}
+
+/* 概览 */
+.overview-body{font-size:14.5px;color:var(--ink-2)}
+.overview-body strong{color:var(--ink);font-weight:700}
+.overview-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.overview-tags a{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--panel-soft);border:1px solid var(--line);color:var(--ink-2);transition:.16s}
+.overview-tags a:hover{border-color:var(--brand);color:var(--brand-deep);background:var(--brand-soft)}
+
+/* 精选卡片 */
+.pick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.pick-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:.2s}
+.pick-card:hover{box-shadow:var(--shadow-lift);transform:translateY(-2px);border-color:var(--line-strong)}
+.pick-cover{position:relative;aspect-ratio:4/3;overflow:hidden;background:#e9e3d9}
+.pick-cover img{width:100%;height:100%;object-fit:cover}
+.pick-cover .rank{position:absolute;top:9px;left:9px;background:rgba(29,27,38,.82);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(4px)}
+.pick-cover .hot{position:absolute;bottom:9px;right:9px;background:rgba(226,80,63,.94);color:#fff;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px}
+.pick-body{padding:13px 14px 15px;display:flex;flex-direction:column;gap:7px;flex:1}
+.pick-body h3{font-size:15px;letter-spacing:-.1px}
+.pick-meta{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:11px;padding:2px 8px;border-radius:6px;background:var(--panel-soft);border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
+.tag.type{background:var(--brand-soft);border-color:rgba(226,80,63,.2);color:var(--brand-deep);font-weight:600}
+.tag.accent{background:var(--accent-soft);border-color:rgba(31,122,107,.2);color:var(--accent);font-weight:600}
+.pick-desc{font-size:13px;color:var(--ink-2);line-height:1.66;margin:0}
+.pick-foot{display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:var(--ink-3);margin-top:auto;padding-top:6px;border-top:1px dashed var(--line)}
+.score{color:var(--gold);font-weight:800;font-size:13px}
+
+/* 更新动态 */
+.update-list{display:flex;flex-direction:column;gap:0;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:var(--panel);box-shadow:var(--shadow)}
+.update-item{display:grid;grid-template-columns:74px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 18px;border-bottom:1px solid var(--line);transition:.16s}
+.update-item:last-child{border-bottom:none}
+.update-item:hover{background:var(--panel-soft)}
+.up-time{font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.up-title{font-size:14px;font-weight:600;color:var(--ink)}
+.up-title span{font-weight:400;color:var(--ink-2)}
+.up-badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.up-badge.new{background:var(--brand-soft);color:var(--brand-deep)}
+.up-badge.live{background:var(--accent-soft);color:var(--accent)}
+.up-badge.rule{background:var(--gold-soft);color:var(--gold)}
+
+/* 分类 */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:12px}
+.cat-item{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px 14px 13px;transition:.18s;display:flex;flex-direction:column;gap:4px}
+.cat-item:hover{border-color:var(--brand);background:var(--brand-soft);transform:translateY(-2px)}
+.cat-item b{font-size:14.5px}
+.cat-item small{font-size:11.5px;color:var(--ink-3);line-height:1.5}
+.cat-item .cat-n{font-size:11px;color:var(--brand-deep);font-weight:700;margin-top:2px}
+
+/* 深度解析 */
+.article-body{font-size:14.8px;color:var(--ink-2);max-width:74ch}
+.article-body h3{font-size:17px;color:var(--ink);margin:24px 0 10px;padding-left:12px;border-left:3px solid var(--brand);line-height:1.3}
+.article-body h3:first-child{margin-top:0}
+.article-body p{margin-bottom:12px}
+.article-body ul{display:flex;flex-direction:column;gap:8px;margin:6px 0 16px;padding-left:0}
+.article-body ul li{position:relative;padding-left:20px;font-size:14.3px}
+.article-body ul li::before{content:"";position:absolute;left:2px;top:9px;width:7px;height:7px;border-radius:2px;background:var(--brand);opacity:.7}
+.article-body strong{color:var(--ink);font-weight:700}
+.pull-quote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:12px 16px;border-radius:0 var(--radius-sm) var(--radius-sm) 0;font-size:13.8px;color:#1b5f54;margin:16px 0}
+
+/* 消费路径 */
+.path-steps{display:grid;gap:12px;counter-reset:step}
+.path-step{display:grid;grid-template-columns:38px minmax(0,1fr);gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px 16px}
+.path-step::before{counter-increment:step;content:counter(step,decimal-leading-zero);font-size:15px;font-weight:800;color:var(--brand);background:var(--brand-soft);border-radius:9px;display:flex;align-items:center;justify-content:center;height:38px}
+.path-step b{font-size:14.5px;display:block;margin-bottom:3px}
+.path-step p{font-size:13px;color:var(--ink-2);margin:0}
+
+/* FAQ */
+.faq-list{display:flex;flex-direction:column;gap:9px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden}
+details[open]{border-color:var(--line-strong);box-shadow:var(--shadow)}
+summary{
+  list-style:none;cursor:pointer;padding:13px 16px;font-size:14.3px;font-weight:600;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;transition:.16s;
+}
+summary::-webkit-details-marker{display:none}
+summary:hover{background:var(--panel-soft)}
+summary:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
+summary .ic{flex:0 0 auto;width:18px;height:18px;position:relative}
+summary .ic::before,summary .ic::after{content:"";position:absolute;background:var(--brand);border-radius:2px;transition:.2s}
+summary .ic::before{width:12px;height:2px;top:8px;left:3px}
+summary .ic::after{width:2px;height:12px;top:3px;left:8px}
+details[open] summary .ic::after{transform:rotate(90deg);opacity:0}
+.faq-answer{padding:0 16px 15px;font-size:13.6px;color:var(--ink-2);border-top:1px dashed var(--line);margin-top:0;padding-top:12px}
+
+/* 评论 */
+.comment-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:12px}
+.comment{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-sm);padding:13px 15px}
+.comment-top{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex:0 0 auto}
+.comment-top b{font-size:13px}
+.comment-top time{font-size:11px;color:var(--ink-3);margin-left:auto;white-space:nowrap}
+.comment p{font-size:13px;color:var(--ink-2);margin:0;line-height:1.65}
+
+/* 资讯 */
+.news-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.news-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;gap:14px;padding:12px;transition:.18s}
+.news-card:hover{box-shadow:var(--shadow-lift);border-color:var(--line-strong)}
+.news-thumb{flex:0 0 96px;height:96px;border-radius:9px;overflow:hidden;background:#e9e3d9}
+.news-thumb img{width:100%;height:100%;object-fit:cover}
+.news-body{min-width:0;display:flex;flex-direction:column;gap:4px}
+.news-body h3{font-size:14px;line-height:1.4}
+.news-body p{font-size:12.5px;color:var(--ink-2);margin:0;line-height:1.55}
+.news-date{font-size:11px;color:var(--ink-3);margin-top:auto}
+
+/* 相关推荐 */
+.rec-tags{display:flex;flex-wrap:wrap;gap:9px}
+.rec-tags a{font-size:13px;padding:6px 14px;border-radius:999px;background:var(--panel);border:1px solid var(--line);color:var(--ink-2);transition:.16s}
+.rec-tags a:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.rec-tags a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* 榜单 */
+.rank-list{display:flex;flex-direction:column}
+.rank-row{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 4px;border-bottom:1px dashed var(--line)}
+.rank-row:last-child{border-bottom:none}
+.rank-no{font-size:14px;font-weight:800;color:var(--ink-3);font-variant-numeric:tabular-nums;text-align:center}
+.rank-row:nth-child(1) .rank-no,.rank-row:nth-child(2) .rank-no,.rank-row:nth-child(3) .rank-no{color:var(--brand)}
+.rank-name{font-size:13.8px;font-weight:600}
+.rank-name small{display:block;font-weight:400;font-size:11.5px;color:var(--ink-3)}
+.rank-val{font-size:12px;color:var(--gold);font-weight:700;white-space:nowrap}
+
+/* 侧栏 */
+.side-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.side-card h2{font-size:13.5px;letter-spacing:.6px;margin-bottom:12px;display:flex;align-items:center;gap:7px}
+.side-card h2::before{content:"";width:3px;height:14px;background:var(--accent);border-radius:2px}
+.side-timeline{display:flex;flex-direction:column;gap:0}
+.side-timeline li{position:relative;padding:0 0 14px 18px;border-left:1.5px solid var(--line)}
+.side-timeline li:last-child{padding-bottom:0;border-left-color:transparent}
+.side-timeline li::before{content:"";position:absolute;left:-5px;top:5px;width:8px;height:8px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 3px var(--panel)}
+.side-timeline time{font-size:11px;color:var(--ink-3);display:block;margin-bottom:2px}
+.side-timeline b{font-size:13px;display:block;line-height:1.45}
+.side-timeline span{font-size:11.5px;color:var(--ink-2)}
+.side-links{display:flex;flex-direction:column;gap:2px}
+.side-links a{display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:7px 9px;border-radius:8px;color:var(--ink-2);transition:.16s}
+.side-links a:hover{background:var(--brand-soft);color:var(--brand-deep)}
+.side-links a em{font-style:normal;font-size:11px;color:var(--ink-3)}
+.side-note{font-size:12px;color:var(--ink-3);line-height:1.65;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+
+/* 页尾 */
+.site-footer{background:#1d1b26;color:#b9b3c6;padding:44px 26px 26px;margin-top:10px}
+.footer-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
+.footer-brand{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.footer-brand .brand-text{color:#fff;font-size:18px}
+.footer-brand .brand-text span{color:#ff8a7d}
+.footer-desc{font-size:13px;line-height:1.75;color:#918ba0;max-width:34ch}
+.footer-col h3{font-size:13px;color:#fff;margin-bottom:11px;letter-spacing:.5px}
+.footer-col ul{display:flex;flex-direction:column;gap:7px}
+.footer-col a{font-size:13px;color:#a8a2b8;transition:.16s}
+.footer-col a:hover{color:#ff8a7d}
+.footer-bottom{max-width:1320px;margin:34px auto 0;padding-top:18px;border-top:1px solid #322f42;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12px;color:#7f7a90}
+.footer-bottom .demo{color:#6c677e}
+
+/* 空结果 */
+.no-result{display:none;padding:18px;text-align:center;color:var(--ink-3);font-size:13px;background:var(--panel-soft);border:1px dashed var(--line-strong);border-radius:var(--radius-sm);margin-top:12px}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:1100px){
+  .layout{grid-template-columns:170px minmax(0,1fr)}
+  .side-col{position:static;grid-column:1 / -1;flex-direction:row;flex-wrap:wrap}
+  .side-col .side-card{flex:1 1 300px}
+  .hero-inner{grid-template-columns:1fr;gap:30px}
+  .hero-visual{min-height:250px;max-width:520px}
+}
+@media (max-width:1024px){
+  :root{--sticky-h:100px}
+  .header-nav{order:3;flex-basis:100%;padding-bottom:4px}
+  .site-header{padding:10px 18px;gap:12px}
+  .footer-inner{grid-template-columns:1fr 1fr}
+}
+@media (max-width:820px){
+  .layout{grid-template-columns:1fr;padding:24px 16px 48px}
+  .channel-col{position:static;order:2}
+  .main-col{order:1}
+  .side-col{order:3}
+  .channel-box ul{flex-direction:row;flex-wrap:wrap;gap:6px}
+  .channel-box h2{padding-bottom:8px}
+  .channel-box .ch-sep{display:none}
+  .channel-box a{flex:0 0 auto;background:var(--panel-soft);border:1px solid var(--line)}
+  .hero-inner{padding:34px 16px 30px}
+  .hero-card{position:static;width:auto!important;transform:none!important;margin-bottom:10px}
+  .hero-visual{min-height:0;display:grid;gap:10px;grid-template-columns:1fr 1fr}
+  .hero-card.c3{display:none}
+  .hero-badge{display:none}
+  .update-item{grid-template-columns:64px minmax(0,1fr);gap:10px}
+  .up-badge{grid-column:2;justify-self:start;margin-top:-4px}
+}
+@media (max-width:740px){
+  .site-header{padding:9px 14px}
+  .header-actions{flex:1;justify-content:flex-end}
+  .search-wrap input{width:130px}
+  .search-wrap input:focus{width:150px}
+  .btn-primary{padding:8px 13px;font-size:12.5px}
+  .brand-text{font-size:17px}
+  .hero-stats{gap:18px}
+  .hero-stats b{font-size:19px}
+  .pick-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .pick-body{padding:11px 12px 13px}
+  .pick-body h3{font-size:13.6px}
+  .pick-desc{font-size:12px}
+  .cat-grid{grid-template-columns:1fr 1fr}
+  .news-list{grid-template-columns:1fr}
+  .comment-grid{grid-template-columns:1fr}
+  .footer-inner{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column}
+  .notice-bar{font-size:12px;padding:7px 12px;gap:8px;text-align:left;justify-content:flex-start}
+  .notice-bar .hide-sm{display:none}
+  .section-head h2{font-size:18.5px}
+}
+@media (max-width:420px){
+  .pick-grid{grid-template-columns:1fr}
+  .cat-grid{grid-template-columns:1fr}
+  .hero-visual{grid-template-columns:1fr}
+}
+</style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+<div class="sticky-stack">
+  <div class="notice-bar" role="status">
+    <span class="dot" aria-hidden="true"></span>
+    <span>本周新增 <strong>18 部</strong>短剧定档信息，<span class="hide-sm">《长夜执灯人》第 12 集已上线，</span>《春风不识旧时人》今晚 20:00 开播</span>
+    <a href="/#gengxin">查看更新</a>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="/#top" aria-label="91短剧网页版首页">
+      <svg class="brand-mark" viewBox="0 0 64 64" role="img" aria-hidden="true">
+        <rect width="64" height="64" rx="15" fill="#1d1b26"/>
+        <path d="M16 19h22a9 9 0 0 1 9 9v17H25a9 9 0 0 1-9-9z" fill="#e2503f"/>
+        <path d="M27 27l14 7-14 7z" fill="#fff3e8"/>
+        <circle cx="47" cy="18" r="5" fill="#1f7a6b"/>
+      </svg>
+      <span class="brand-text">91短剧<span>网页版</span></span>
+    </a>
+    <nav class="header-nav" aria-label="主题导航">
+      <a href="/#gaishu">短剧概览</a>
+      <a href="/#jingxuan">精选推荐</a>
+      <a href="/#gengxin">更新动态</a>
+      <a href="/#fenlei">类型分类</a>
+      <a href="/#jiedu">深度解析</a>
+      <a href="/#zhinan">观看路径</a>
+      <a href="/#faq">常见问题</a>
+      <a href="/#bangdan">热度榜单</a>
+    </nav>
+    <div class="header-actions">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg>
+        <input type="search" id="siteSearch" placeholder="搜剧名 / 类型" aria-label="搜索短剧条目">
+      </div>
+      <button class="btn-primary" type="button" id="searchBtn">查找</button>
+    </div>
+  </header>
+</div>
+
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div>
+      <span class="hero-kicker">竖屏短剧 · 分集更新追踪</span>
+      <h1>91短剧网页版</h1>
+      <p class="hero-lead">聚合都市逆袭、古装甜宠、悬疑反转、年代情感等竖屏短剧，按分集更新节奏整理条目看点、类型差异与挑选依据，方便先判断再决定从哪一部开始追。</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="/#jingxuan">浏览精选条目</a>
+        <a class="btn-ghost" href="/#zhinan">看观看路径</a>
+      </div>
+      <div class="hero-stats">
+        <div><b>246</b><small>在更短剧条目</small></div>
+        <div><b>18</b><small>本周新定档</small></div>
+        <div><b>9</b><small>类型频道</small></div>
+        <div><b>70—120</b><small>单部常见集数</small></div>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <span class="hero-badge">今日更新 6 部</span>
+      <div class="hero-card c1">
+        <div class="hero-thumb"><img src="https://picsum.photos/seed/duanju-chengshi31/400/300" alt="都市逆袭短剧《重返十八岁的董事会》封面" width="400" height="300" loading="lazy"></div>
+        <h4>重返十八岁的董事会</h4>
+        <p>都市逆袭 · 第 24 集</p>
+      </div>
+      <div class="hero-card c2">
+        <div class="hero-thumb"><img src="https://picsum.photos/seed/duanju-gufeng12/400/300" alt="古装甜宠短剧《春灯照旧人》封面" width="400" height="300" loading="lazy"></div>
+        <h4>春灯照旧人</h4>
+        <p>古装甜宠 · 已完结</p>
+      </div>
+      <div class="hero-card c3">
+        <div class="hero-thumb"><img src="https://picsum.photos/seed/duanju-xuanyi07/400/300" alt="悬疑反转短剧《第七通电话》封面" width="400" height="300" loading="lazy"></div>
+        <h4>第七通电话</h4>
+        <p>悬疑反转 · 第 9 集</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="layout">
+
+  <!-- 左频道栏 -->
+  <aside class="channel-col" aria-label="频道索引">
+    <div class="channel-box">
+      <h2>类型频道</h2>
+      <ul>
+        <li><a href="/#fenlei">都市逆袭 <em>62</em></a></li>
+        <li><a href="/#fenlei">古装甜宠 <em>48</em></a></li>
+        <li><a href="/#fenlei">悬疑反转 <em>37</em></a></li>
+        <li><a href="/#fenlei">年代情感 <em>29</em></a></li>
+        <li><a href="/#fenlei">职场商战 <em>24</em></a></li>
+        <li><a href="/#fenlei">家庭伦理 <em>21</em></a></li>
+        <li><a href="/#fenlei">玄幻穿书 <em>17</em></a></li>
+        <li><a href="/#fenlei">轻喜治愈 <em>8</em></a></li>
+      </ul>
+      <div class="ch-sep"></div>
+      <h2>内容导航</h2>
+      <ul>
+        <li><a href="/#gaishu">领域概览</a></li>
+        <li><a href="/#jingxuan">精选条目</a></li>
+        <li><a href="/#gengxin">更新动态</a></li>
+        <li><a href="/#jiedu">深度解析</a></li>
+        <li><a href="/#zhinan">消费路径</a></li>
+        <li><a href="/#pinglun">观众评论</a></li>
+        <li><a href="/#zixun">相关资讯</a></li>
+        <li><a href="/#bangdan">热度榜单</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- 主内容 -->
+  <main class="main-col">
+
+    <!-- 1 领域概览 -->
+    <section class="section" id="gaishu">
+      <div class="section-head">
+        <h2>短剧领域概览：竖屏里都有哪些内容方向</h2>
+        <span class="sub">2026 年 11 月 8 日整理</span>
+      </div>
+      <div class="card pad overview-body">
+        <p><strong>91短剧网页版</strong>所指向的内容，主体是单集 1—3 分钟、总集数多在 70—120 集之间的竖屏短剧。它和传统长剧最大的区别不在时长，而在节奏结构：前 3 集必须完成人物处境交代与第一次冲突，第 8—15 集进入身份反转或关系确认，此后每 5—8 集安排一次小高潮，结局通常落在“翻盘”或“和解”两类收束方式上。理解这套结构，比记住某一部剧的名字更有用。</p>
+        <p>从当前在更的条目看，主要分成几个方向。<strong>都市逆袭</strong>数量最多，常见设定是主角被误判、被夺权、被退婚后重新掌握资源，看点集中在打脸节奏是否干脆、反派是否具备像样的对抗能力。<strong>古装甜宠</strong>更依赖人物关系推进，主线往往是先婚后爱、替嫁、追妻火葬场，判断标准是感情线是否有中间层次，而不是一路顺拐。<strong>悬疑反转</strong>体量小但口碑分化明显，成片质量取决于伏笔是否回收，烂尾是这一类型最常见的问题。</p>
+        <p>还有几类值得单独留意。<strong>年代情感</strong>以 1980—2000 年代为背景，靠生活细节和家庭关系取胜，节奏偏慢但完成度高；<strong>职场商战</strong>把冲突放在谈判桌和股权结构里，适合喜欢看具体手段的观众；<strong>家庭伦理</strong>常围绕赡养、遗产、重组家庭展开；<strong>玄幻穿书</strong>借用系统、穿书、读档等设定，节奏最快；<strong>轻喜治愈</strong>目前只有 8 部在更，属于供给偏少但复看率较高的方向。</p>
+        <p>选剧时真正需要先确认三件事：类型是否对味、更新是否稳定、结局是否已完结。已完结的条目适合一次看完，在更条目则要考虑断更风险。单集时长越短，越依赖连续观看，碎片时间反而不一定合适。</p>
+        <div class="overview-tags">
+          <a href="/#fenlei">都市逆袭短剧</a>
+          <a href="/#fenlei">古装甜宠剧</a>
+          <a href="/#fenlei">悬疑反转短剧</a>
+          <a href="/#fenlei">年代情感剧</a>
+          <a href="/#fenlei">玄幻穿书短剧</a>
+          <a href="/#zhinan">已完结短剧</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 精选内容推荐 -->
+    <section class="section" id="jingxuan">
+      <div class="section-head">
+        <h2>精选短剧条目推荐</h2>
+        <a class="more" href="/#gengxin">按更新时间浏览</a>
+      </div>
+      <div class="pick-grid" id="pickGrid">
+
+        <article class="pick-card" data-keywords="重返十八岁的董事会 都市逆袭 商战">
+          <div class="pick-cover">
+            <img src="https://picsum.photos/seed/chengshi-banquan21/400/300" alt="都市逆袭短剧《重返十八岁的董事会》封面" width="400" height="300" loading="lazy">
+            <span class="rank">热度 96</span>
+            <span class="hot">在更 · 第 24 集</span>
+          </div>
+          <div class="pick-body">
+            <h3>重返十八岁的董事会</h3>
+            <div class="pick-meta"><span class="tag type">都市逆袭</span><span class="tag">商战</span><span class="tag">重生</span></div>
+            <p class="pick-desc">主角带着二十年经营记忆回到高考前夜，用一份被撕毁的对赌协议反向收购家族企业，冲突集中在会议室而非争吵，反派有真实手段。</p>
+            <div class="pick-foot"><span>更新至 24 / 90 集</span><span class="score">8.7</span></div>
+          </div>
+        </article>
+
+        <article class="pick-card" data-keywords="春灯照旧人 古装甜宠 先婚后爱">
+          <div class="pick-cover">
+            <img src="https://picsum.photos/seed/gufeng-chundeng14/400/300" alt="古装甜宠短剧《春灯照旧人》封面" width="400" height="300" loading="lazy">
+            <span class="rank">热度 93</span>
+            <span class="hot">已完结</span>
+          </div>
+          <div class="pick-body">
+            <h3>春灯照旧人</h3>
+            <div class="pick-meta"><span class="tag type">古装甜宠</span><span class="tag">先婚后爱</span><span class="tag">宅斗</span></div>
+            <p class="pick-desc">商户女替嫁入侯府，前 20 集靠账本与礼法周旋，感情线在第 34 集才真正转折，属于慢热但人物立得住的一类。</p>
+            <div class="pick-foot"><span>全 88 集 · 已完结</span><span class="score">8.5</span></div>
+          </div>
+        </article>
+
+        <article class="pick-card" data-keywords="第七通电话 悬疑反转 通话">
+          <div class="pick-cover">
+            <img src="https://picsum.photos/seed/xuanyi-dianhua09/400/300" alt="悬疑反转短剧《第七通电话》封面" width="400" height="300" loading="lazy">
+            <span class="rank">热度 91</span>
+            <span class="hot">在更 · 第 9 集</span>
+          </div>
+          <div class="pick-body">
+            <h3>第七通电话</h3>
+            <div class="pick-meta"><span class="tag type">悬疑反转</span><span class="tag">时间循环</span><span class="tag">单元案</span></div>
+            <p class="pick-desc">每通电话把那晚重来一次，前六集的细节都能在第九集找到对应，伏笔回收密度高，适合喜欢逐帧回看的观众。</p>
+            <div class="pick-foot"><span>更新至 9 / 60 集</span><span class="score">9.1</span></div>
+          </div>
+        </article>
+
+        <article class="pick-card" data-keywords="长夜执灯人 年代情感 家族">
+          <div class="pick-cover">
+            <img src="https://picsum.photos/seed/niandai-zhideng06/400/300" alt="年代情感短剧《长夜执灯人》封面" width="400" height="300" loading="lazy">
+            <span class="rank">热度 88</span>
+            <span class="hot">在更 · 第 12 集</span>
+          </div>
+          <div class="pick-body">
+            <h3>长夜执灯人</h3>
+            <div class="pick-meta"><span class="tag type">年代情感</span><span class="tag">家族</span><span class="tag">群像</span></div>
+            <p class="pick-desc">以一座县城的灯具厂为轴，讲三代人围绕改制与接班的选择，节奏比同类慢，但生活细节扎实，适合不喜欢强反转的观众。</p>
+            <div class="pick-foot"><span>更新至 12 / 72 集</span><span class="score">8.3</span></div>
+          </div>
+        </article>
+
+        <article class="pick-card" data-keywords="谈判桌之外 职场商战 谈判">
+          <div class="pick-cover">
+            <img src="https://picsum.photos/seed/zhichang-tanpan17/400/300" alt="职场商战短剧《谈判桌之外》封面" width="400" height="300" loading="lazy">
+            <span class="rank">热度 86</span>
+            <span class="hot">在更 · 第 31 集</span>
+          </div>
+          <div class="pick-body">
+            <h3>谈判桌之外</h3>
+            <div class="pick-meta"><span class="tag type">职场商战</span><span class="tag">对赌</span><span class="tag">双强</span></div>
+            <p class="pick-desc">两家供应链公司争夺同一笔订单，剧本把报价、账期和违约条款写进了对话，冲突靠数字推进，是同类里少见的写法。</p>
+            <div class="pick-foot"><span>更新至 31 / 80 集</span><span class="score">8.6</span></div>
+          </div>
+        </article>
+
+        <article class="pick-card" data-keywords="老屋三分地 家庭伦理 遗产">
+          <div class="pick-cover">
+            <img src="https://picsum.photos/seed/jiating-laowu03/400/300" alt="家庭伦理短剧《老屋三分地》封面" width="400" height="300" loading="lazy">
+            <span class="rank">热度 84</span>
+            <span class="hot">已完结</span>
+          </div>
+          <div class="pick-body">
+            <h3>老屋三分地</h3>
+            <div class="pick-meta"><span class="tag type">家庭伦理</span><span class="tag">遗产</span><span class="tag">和解</span></div>
+            <p class="pick-desc">三兄妹为一份未签字的拆迁协议翻出旧账，结局没有强行大团圆，最后两集的调解戏份是整部剧的重心。</p>
+            <div class="pick-foot"><span>全 66 集 · 已完结</span><span class="score">8.4</span></div>
+          </div>
+        </article>
+
+        <article class="pick-card" data-keywords="我靠读档通关宅斗 玄幻穿书 系统">
+          <div class="pick-cover">
+            <img src="https://picsum.photos/seed/xuanhuan-duDang11/400/300" alt="玄幻穿书短剧《我靠读档通关宅斗》封面" width="400" height="300" loading="lazy">
+            <span class="rank">热度 82</span>
+            <span class="hot">在更 · 第 41 集</span>
+          </div>
+          <div class="pick-body">
+            <h3>我靠读档通关宅斗</h3>
+            <div class="pick-meta"><span class="tag type">玄幻穿书</span><span class="tag">读档</span><span class="tag">爽感</span></div>
+            <p class="pick-desc">主角每死一次就回到当天清晨，用失败经验逐条拆解对手布局，前 20 集节奏极快，适合追求爽感不需要铺垫的观众。</p>
+            <div class="pick-foot"><span>更新至 41 / 100 集</span><span class="score">8.0</span></div>
+          </div>
+        </article>
+
+        <article class="pick-card" data-keywords="楼下便利店的春天 轻喜治愈 日常">
+          <div class="pick-cover">
+            <img src="https://picsum.photos/seed/qingxi-bianli08/400/300" alt="轻喜治愈短剧《楼下便利店的春天》封面" width="400" height="300" loading="lazy">
+            <span class="rank">热度 79</span>
+            <span class="hot">已完结</span>
+          </div>
+          <div class="pick-body">
+            <h3>楼下便利店的春天</h3>
+            <div class="pick-meta"><span class="tag type">轻喜治愈</span><span class="tag">日常</span><span class="tag">单元</span></div>
+            <p class="pick-desc">一家 24 小时便利店的夜班故事，每 3 集一位客人，没有主线大反转，靠对话和生活感留人，适合睡前分段看。</p>
+            <div class="pick-foot"><span>全 54 集 · 已完结</span><span class="score">8.8</span></div>
+          </div>
+        </article>
+
+      </div>
+      <div class="no-result" id="pickNoResult">没有匹配的条目，试试输入“都市”“古装”“悬疑”或具体剧名。</div>
+    </section>
+
+    <!-- 3 更新动态 -->
+    <section class="section" id="gengxin">
+      <div class="section-head">
+        <h2>最新更新与开播动态</h2>
+        <span class="sub">截至 11 月 8 日 09:40</span>
+      </div>
+      <ul class="update-list">
+        <li class="update-item"><span class="up-time">今天 09:30</span><span class="up-title">《长夜执灯人》<span>第 12 集上线，灯具厂改制方案首次公开</span></span><span class="up-badge new">新集</span></li>
+        <li class="update-item"><span class="up-time">今天 08:10</span><span class="up-title">《重返十八岁的董事会》<span>第 24 集更新，对赌协议进入第二轮谈判</span></span><span class="up-badge new">新集</span></li>
+        <li class="update-item"><span class="up-time">今天 00:05</span><span class="up-title">《第七通电话》<span>第 9 集解锁，第五通电话的录音出现第二个人声</span></span><span class="up-badge new">新集</span></li>
+        <li class="update-item"><span class="up-time">昨天 21:10</span><span class="up-title">《春风不识旧时人》<span>定档今晚 20:00 首播，前 6 集连更</span></span><span class="up-badge live">定档</span></li>
+        <li class="update-item"><span class="up-time">昨天 18:40</span><span class="up-title">《谈判桌之外》<span>第 31 集上线，账期条款成为新冲突点</span></span><span class="up-badge new">新集</span></li>
+        <li class="update-item"><span class="up-time">11 月 6 日</span><span class="up-title">《我靠读档通关宅斗》<span>第 41 集更新，读档次数首次突破 20 次</span></span><span class="up-badge new">新集</span></li>
+        <li class="update-item"><span class="up-time">11 月 5 日</span><span class="up-title">《雾港来信》<span>全 76 集完结，结局解释信件的真实寄件人</span></span><span class="up-badge rule">完结</span></li>
+        <li class="update-item"><span class="up-time">11 月 4 日</span><span class="up-title">《旧厂区的夏天》<span>调整更新节奏，由每日 2 集改为每日 1 集</span></span><span class="up-badge rule">调整</span></li>
+        <li class="update-item"><span class="up-time">11 月 3 日</span><span class="up-title">《春灯照旧人》<span>番外篇 4 集上线，补完配角支线</span></span><span class="up-badge new">番外</span></li>
+        <li class="update-item"><span class="up-time">11 月 1 日</span><span class="up-title">《第七通电话》<span>第 7—8 集连播，时间循环规则补充说明</span></span><span class="up-badge new">连更</span></li>
+        <li class="update-item"><span class="up-time">10 月 30 日</span><span class="up-title">《老屋三分地》<span>最后 4 集上线，调解戏份完整放出</span></span><span class="up-badge rule">完结</span></li>
+        <li class="update-item"><span class="up-time">10 月 28 日</span><span class="up-title">《楼下便利店的春天》<span>新增 6 集单元故事，围绕深夜代驾客人</span></span><span class="up-badge new">新增</span></li>
+      </ul>
+    </section>
+
+    <!-- 4 分类入口 -->
+    <section class="section" id="fenlei">
+      <div class="section-head">
+        <h2>按类型进入短剧分类</h2>
+        <span class="sub">共 9 个方向 · 246 部在更</span>
+      </div>
+      <div class="cat-grid">
+        <a class="cat-item" href="/#jingxuan"><b>都市逆袭</b><small>打脸、翻身、夺回资源</small><span class="cat-n">62 部</span></a>
+        <a class="cat-item" href="/#jingxuan"><b>古装甜宠</b><small>替嫁、先婚后爱、追妻</small><span class="cat-n">48 部</span></a>
+        <a class="cat-item" href="/#jingxuan"><b>悬疑反转</b><small>循环、单元案、伏笔回收</small><span class="cat-n">37 部</span></a>
+        <a class="cat-item" href="/#jingxuan"><b>年代情感</b><small>家族、老厂、生活细节</small><span class="cat-n">29 部</span></a>
+        <a class="cat-item" href="/#jingxuan"><b>职场商战</b><small>谈判、对赌、股权结构</small><span class="cat-n">24 部</span></a>
+        <a class="cat-item" href="/#jingxuan"><b>家庭伦理</b><small>赡养、遗产、重组家庭</small><span class="cat-n">21 部</span></a>
+        <a class="cat-item" href="/#jingxuan"><b>玄幻穿书</b><small>系统、读档、规则设定</small><span class="cat-n">17 部</span></a>
+        <a class="cat-item" href="/#jingxuan"><b>轻喜治愈</b><small>日常、单元、慢节奏</small><span class="cat-n">8 部</span></a>
+      </div>
+    </section>
+
+    <!-- 5 深度解析 -->
+    <section class="section" id="jiedu">
+      <div class="section-head">
+        <h2>深度解析：短剧类型差异与判断维度</h2>
+        <span class="sub">约 800 字</span>
+      </div>
+      <div class="card pad article-body">
+        <h3>都市逆袭与职场商战：爽感的来源不一样</h3>
+        <p>这两类常被放在一起，但驱动力完全不同。<strong>都市逆袭</strong>的爽感来自身份落差被一次性抹平——被退婚、被夺权、被当众羞辱的人，在第 10 集左右亮出真实身份，观众获得的是即时补偿。它的判断标准很直接：反派的压制是否具备真实压迫感，主角翻盘是否用了具体手段而不是一句台词。</p>
+        <p><strong>职场商战</strong>把冲突放在可验证的规则里。报价、账期、违约金、董事会席位，这些要素一旦写清楚，冲突就有了重量。它的问题在于门槛：如果剧本只把“商战”当背景板，实际仍靠吵架推进，观感会比纯逆袭更尴尬。看这类条目，可以先跳到第 10—15 集，如果冲突双方还在用口头威胁，基本可以判断它没有真正的商战线。</p>
+        <div class="pull-quote">判断一部短剧值不值得追，先看它第 10 集前后解决冲突的方式：靠身份、靠规则、还是靠巧合。前两种能撑住，第三种通常后劲不足。</div>
+
+        <h3>古装甜宠的分水岭：感情线有没有中间层</h3>
+        <p>替嫁、先婚后爱、追妻火葬场是这一类型最常见的三个起点，但起点相似不代表成片相似。差别在于感情线有没有中间层——从戒备到试探、从试探到依赖、从依赖到明确，每一层都需要具体事件推动。</p>
+        <ul>
+          <li><strong>一层式</strong>：前 5 集互相讨厌，第 6 集突然心动，之后一路甜。节奏快但人物单薄，适合下饭。</li>
+          <li><strong>两层式</strong>：加一段共同应对危机的经历，关系在危机后松动。多数口碑中上的条目属于这一档。</li>
+          <li><strong>三层式</strong>：双方各自背负家族或立场冲突，感情推进伴随代价。这类数量少，但复看率最高。</li>
+        </ul>
+        <p>《春灯照旧人》属于三层式的偏慢写法，前 20 集几乎不写感情，靠账本、礼法和宅内秩序推进，第 34 集才出现明确转折。如果只想看甜，会显得拖；如果在意人物是否立得住，这种节奏反而更耐看。</p>
+
+        <h3>悬疑反转：先看伏笔回收，再看反转次数</h3>
+        <p>悬疑短剧最容易踩的坑是“为反转而反转”。集数短、成本有限的情况下，编剧常用一个惊人结局收尾，但前面的线索并不支持这个结论。判断方法有两个：一是看前 3 集给出的异常细节，结局是否逐条回应；二是看反转是否改变了人物动机，还是只改变了观众认知。</p>
+        <p>《第七通电话》采用时间循环结构，每通电话重来一次。它的优势在于规则明确——循环只覆盖当晚 22:00 到次日 06:00，主角的记忆保留但身体状态重置。规则一旦清晰，观众就能自行验证细节，这也是它评分较高的原因。相反，如果循环规则前后不一致，观众会立刻失去推理乐趣。</p>
+
+        <h3>年代情感与家庭伦理：慢节奏的取舍</h3>
+        <p>这两类在短剧里属于“反节奏”的存在。年代情感依赖生活细节，家庭伦理依赖关系张力，都不适合每集一个爆点。《长夜执灯人》用一座灯具厂的改制串起三代人，前 12 集几乎没有强冲突，靠分配住房、技术引进、师徒关系这些具体事项推进。它的观众通常不是冲着爽感来的，而是想看一个完整的过程。</p>
+        <p>家庭伦理的判断标准更实际：冲突是否落在具体利益上。赡养费怎么摊、老屋归谁、拆迁款怎么分，这些一旦写实，戏就成立；如果只是互相指责“你不孝”，很快就会重复。《老屋三分地》把重心放在最后两集的调解上，结局没有强行和解，这一点比大团圆更接近真实。</p>
+
+        <h3>玄幻穿书与轻喜治愈：两个极端</h3>
+        <p>玄幻穿书是节奏最快的一类，系统、读档、穿书设定本质上是在给主角提供试错机会，观众看的是“如何用规则解决问题”。《我靠读档通关宅斗》每死一次回到当天清晨，前 20 集密度很高，适合不需要铺垫的观看场景。轻喜治愈则完全相反，《楼下便利店的春天》每 3 集一位客人，没有主线反转，靠对话留人，适合睡前分段看。</p>
+        <p>这两类共同说明一件事：短剧的类型差异，最终落在“单位时间给多少信息”上。信息密度高的适合连续追，密度低的适合分散看。选之前先确认自己当下想要哪种节奏，比看评分更有效。</p>
+      </div>
+    </section>
+
+    <!-- 6 观看路径 -->
+    <section class="section" id="zhinan">
+      <div class="section-head">
+        <h2>观看路径：先看什么，怎么判断值不值得投入</h2>
+        <span class="sub">按顺序判断，减少试错</span>
+      </div>
+      <div class="path-steps">
+        <div class="path-step"><div><b>先按当下状态选类型</b><p>想放松就看轻喜治愈或古装甜宠，想被推着走就看都市逆袭，想动脑就看悬疑反转。类型选错，后面所有判断都会失效。</p></div></div>
+        <div class="path-step"><div><b>确认更新状态再决定追不追</b><p>已完结的条目适合一次看完，不必担心断更；在更条目要看清每日更新集数和是否有调整记录，日更 1 集和日更 3 集的追剧体验差别很大。</p></div></div>
+        <div class="path-step"><div><b>用第 3 集和第 10 集做抽样</b><p>第 3 集看人物处境是否交代清楚，第 10 集看冲突解决方式。两集都能撑住，再回头补前面的内容，比从头硬看更省时间。</p></div></div>
+        <div class="path-step"><div><b>比较同类条目的处理方式</b><p>同样写替嫁，看它用了几层感情推进；同样写商战，看它有没有具体条款。同类对比比单看评分更能判断成片水平。</p></div></div>
+        <div class="path-step"><div><b>按单集时长安排观看场景</b><p>单集 1—2 分钟的条目适合通勤和排队，单集 3 分钟以上、信息密度高的更适合完整时段。碎片时间看不适合的条目，容易看到一半就放弃。</p></div></div>
+      </div>
+    </section>
+
+    <!-- 7 FAQ -->
+    <section class="section" id="faq">
+      <div class="section-head">
+        <h2>常见问题</h2>
+        <span class="sub">围绕类型、更新与选择的实际疑问</span>
+      </div>
+      <div class="faq-list">
+        <details>
+          <summary>都市逆袭短剧一般多久更新一次？<span class="ic" aria-hidden="true"></span></summary>
+          <div class="faq-answer">多数在更条目采用日更，常见节奏是每日 1—2 集，部分热度较高的会一次性放出 6—10 集做首播。也有条目中途从日更 2 集调整为日更 1 集，追之前先看更新记录里的调整说明，比按首播节奏预估更准。</div>
+        </details>
+        <details>
+          <summary>古装甜宠和年代情感有什么区别？<span class="ic" aria-hidden="true"></span></summary>
+          <div class="faq-answer">古装甜宠以架空或古代背景下的感情线为主，冲突集中在婚约、身份和宅内关系；年代情感以 1980—2000 年代的真实生活为背景，重心在家庭、工厂和时代变化。前者看关系推进，后者看生活细节，节奏上年代情感通常更慢。</div>
+        </details>
+        <details>
+          <summary>第一次接触短剧，从哪个类型开始看比较好？<span class="ic" aria-hidden="true"></span></summary>
+          <div class="faq-answer">如果平时很少看剧，建议从轻喜治愈或古装甜宠入手，单集信息量适中，不需要记复杂设定。如果习惯强情节，可以直接看都市逆袭，前 3 集就能判断是否对味。悬疑反转对注意力要求最高，不建议作为第一部。</div>
+        </details>
+        <details>
+          <summary>悬疑反转类短剧的评判标准通常是什么？<span class="ic" aria-hidden="true"></span></summary>
+          <div class="faq-answer">主要看两点：一是前几集埋下的异常细节，结局是否逐条回应；二是反转是否改变了人物动机，而不只是让观众惊讶。规则清晰的循环或单元结构更容易成立，规则前后矛盾的通常后劲不足。</div>
+        </details>
+        <details>
+          <summary>已完结和在更的短剧，追起来体验差别大吗？<span class="ic" aria-hidden="true"></span></summary>
+          <div class="faq-answer">差别主要在节奏控制。已完结可以按自己的时间一次看完，不必担心断更；在更条目受更新节奏影响，日更 1 集时容易忘记前面的细节，尤其是悬疑类。如果时间不固定，优先选已完结的条目。</div>
+        </details>
+        <details>
+          <summary>单集只有一两分钟，为什么总集数普遍在 70 集以上？<span class="ic" aria-hidden="true"></span></summary>
+          <div class="faq-answer">因为单集承载的信息量有限，一个完整的身份反转或关系转折往往需要 5—8 集铺垫。总集数多不等于注水，关键看每 5—8 集是否有一个明确推进。如果连续 10 集都在重复同一冲突，才属于节奏问题。</div>
+        </details>
+      </div>
+    </section>
+
+    <!-- 8 用户评论 -->
+    <section class="section" id="pinglun">
+      <div class="section-head">
+        <h2>观众评论</h2>
+        <span class="sub">来自条目讨论区的节选</span>
+      </div>
+      <div class="comment-grid">
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#e2503f">林</span><b>林间有风</b><time>今天 09:12</time></div><p>《重返十八岁的董事会》第 24 集那场谈判写得挺实，报价和账期都摆出来了，不是光靠喊。</p></div>
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#1f7a6b">周</span><b>周末补剧</b><time>今天 08:40</time></div><p>《春灯照旧人》前 20 集确实慢，但账本那条线埋得清楚，看到第 34 集才明白前面为什么那么写。</p></div>
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#b9821f">沈</span><b>沈默看片</b><time>昨天 23:05</time></div><p>《第七通电话》第九集把第五通电话的录音重放了一遍，第二个人声之前完全没注意，回头翻了前三集。</p></div>
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#5a4b8a">陈</span><b>陈年旧胶片</b><time>昨天 21:33</time></div><p>《长夜执灯人》节奏是慢，但灯具厂改制的细节做得像那么回事，比强反转的耐看。</p></div>
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#2f6f9e">许</span><b>许愿不加班</b><time>昨天 20:18</time></div><p>《谈判桌之外》第 31 集账期那段有点意思，但前面十几集还是吵得多，商战线起来得偏晚。</p></div>
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#a8442f">何</span><b>何处是归途</b><time>昨天 18:02</time></div><p>《老屋三分地》结局没强行和解，这点加分，最后两集调解戏份比前面所有争吵都有用。</p></div>
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#3f7a4a">吴</span><b>吴钩霜雪</b><time>11 月 7 日</time></div><p>《我靠读档通关宅斗》前 20 集太快了，一集死一次，看着爽但人物记不住，后面慢下来反而好点。</p></div>
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#8a4a7a">赵</span><b>赵小满</b><time>11 月 7 日</time></div><p>《楼下便利店的春天》适合睡前看，一集一个客人，不用记前情，看到哪算哪。</p></div>
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#4a6a8a">孙</span><b>孙山之外</b><time>11 月 6 日</time></div><p>《雾港来信》结局解释寄件人那段有点仓促，前面信件内容铺了那么多，最后一句带过了。</p></div>
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#9e6f2f">李</span><b>李子树下</b><time>11 月 6 日</time></div><p>年代情感类是真的慢，但《旧厂区的夏天》改成日更 1 集之后反而更合适，一次看两集容易走神。</p></div>
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#3a7a6a">郑</span><b>郑在追剧</b><time>11 月 5 日</time></div><p>都市逆袭看多了会疲，最近转去看家庭伦理，冲突落在具体利益上，比单纯打脸有回味。</p></div>
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#7a5a3a">王</span><b>王不留行</b><time>11 月 5 日</time></div><p>《第七通电话》的循环规则写得很清楚，只在当晚 22 点到次日 6 点之间重来，这点比同类严谨。</p></div>
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#5a7a3a">冯</span><b>冯虚御风</b><time>11 月 4 日</time></div><p>古装甜宠里三层推进的不多，《春灯照旧人》算一个，但番外篇加得有点多余。</p></div>
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#8a3a4a">褚</span><b>褚时看戏</b><time>11 月 3 日</time></div><p>职场商战最怕只挂个名，《谈判桌之外》至少把违约条款写进对话了，能看下去。</p></div>
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#2f5a7a">卫</span><b>卫子夫的书</b><time>11 月 3 日</time></div><p>《重返十八岁的董事会》反派不是纯工具人，第二十集那次反收购有来有回，这点难得。</p></div>
+        <div class="comment"><div class="comment-top"><span class="avatar" style="background:#7a3a2f">蒋</span><b>蒋山青</b><time>11 月 2 日</time></div><p>轻喜治愈一共就八部在更，选择太少，但《楼下便利店的春天》确实可以反复看。</p></div>
+      </div>
+    </section>
+
+    <!-- 9 相关资讯 -->
+    <section class="section" id="zixun">
+      <div class="section-head">
+        <h2>相关资讯</h2>
+        <span class="sub">类型动态与条目调整</span>
+      </div>
+      <div class="news-list">
+        <article class="news-card">
+          <div class="news-thumb"><img src="https://picsum.photos/seed/zixun-dingdang11/600/400" alt="短剧《春风不识旧时人》定档海报" width="600" height="400" loading="lazy"></div>
+          <div class="news-body"><h3>《春风不识旧时人》定档 11 月 7 日晚首播</h3><p>年代情感新条目，前 6 集连更，故事围绕一座县城的纺织厂交接展开。</p><span class="news-date">11 月 7 日</span></div>
+        </article>
+        <article class="news-card">
+          <div class="news-thumb"><img src="https://picsum.photos/seed/zixun-jieju05/600/400" alt="《雾港来信》完结集剧照" width="600" height="400" loading="lazy"></div>
+          <div class="news-body"><h3>《雾港来信》全 76 集完结，寄件人身份揭晓</h3><p>悬疑反转条目收官，结局对前 20 集出现的七封信逐一回应。</p><span class="news-date">11 月 5 日</span></div>
+        </article>
+        <article class="news-card">
+          <div class="news-thumb"><img src="https://picsum.photos/seed/zixun-jiezou08/600/400" alt="《旧厂区的夏天》工厂场景剧照" width="600" height="400" loading="lazy"></div>
+          <div class="news-body"><h3>《旧厂区的夏天》更新节奏由日更 2 集改为日更 1 集</h3><p>制作方表示后续集数信息量更大，调整为单集更新以保留完整叙事。</p><span class="news-date">11 月 4 日</span></div>
+        </article>
+        <article class="news-card">
+          <div class="news-thumb"><img src="https://picsum.photos/seed/zixun-fanwai03/600/400" alt="《春灯照旧人》番外篇剧照" width="600" height="400" loading="lazy"></div>
+          <div class="news-body"><h3>《春灯照旧人》番外篇 4 集上线，补完配角支线</h3><p>正片已完结，番外聚焦侯府二房与账房先生的后续，不影响主线结局。</p><span class="news-date">11 月 3 日</span></div>
+        </article>
+        <article class="news-card">
+          <div class="news-thumb"><img src="https://picsum.photos/seed/zixun-xunhuan12/600/400" alt="《第七通电话》循环规则示意图" width="600" height="400" loading="lazy"></div>
+          <div class="news-body"><h3>《第七通电话》第 7—8 集连播，补充循环规则说明</h3><p>新增一段关于时间范围与记忆保留的说明，回应观众对规则一致性的讨论。</p><span class="news-date">11 月 1 日</span></div>
+        </article>
+        <article class="news-card">
+          <div class="news-thumb"><img src="https://picsum.photos/seed/zixun-danyuan09/600/400" alt="《楼下便利店的春天》夜班便利店剧照" width="600" height="400" loading="lazy"></div>
+          <div class="news-body"><h3>《楼下便利店的春天》新增 6 集单元故事</h3><p>新单元围绕深夜代驾客人展开，保持每 3 集一位客人的结构。</p><span class="news-date">10 月 28 日</span></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 10 相关推荐 -->
+    <section class="section" id="tuijian">
+      <div class="section-head">
+        <h2>相关推荐方向</h2>
+        <span class="sub">延伸类型与具体条目</span>
+      </div>
+      <div class="rec-tags">
+        <a href="/#jingxuan">替嫁题材古装短剧</a>
+        <a href="/#jingxuan">时间循环悬疑短剧</a>
+        <a href="/#jingxuan">对赌协议商战短剧</a>
+        <a href="/#jingxuan">读档系统穿书短剧</a>
+        <a href="/#jingxuan">老厂改制年代剧</a>
+        <a href="/#jingxuan">拆迁遗产家庭剧</a>
+        <a href="/#gengxin">已完结可一次看完</a>
+        <a href="/#bangdan">高评分短剧榜单</a>
+      </div>
+    </section>
+
+    <!-- 11 热度榜单 -->
+    <section class="section" id="bangdan">
+      <div class="section-head">
+        <h2>短剧热度榜单</h2>
+        <span class="sub">按近 7 日讨论量与完播率综合排序 · 11 月 8 日</span>
+      </div>
+      <div class="card pad">
+        <div class="rank-list">
+          <div class="rank-row"><span class="rank-no">1</span><span class="rank-name">第七通电话<small>悬疑反转 · 在更第 9 集</small></span><span class="rank-val">9.1</span></div>
+          <div class="rank-row"><span class="rank-no">2</span><span class="rank-name">重返十八岁的董事会<small>都市逆袭 · 在更第 24 集</small></span><span class="rank-val">8.7</span></div>
+          <div class="rank-row"><span class="rank-no">3</span><span class="rank-name">楼下便利店的春天<small>轻喜治愈 · 已完结</small></span><span class="rank-val">8.8</span></div>
+          <div class="rank-row"><span class="rank-no">4</span><span class="rank-name">谈判桌之外<small>职场商战 · 在更第 31 集</small></span><span class="rank-val">8.6</span></div>
+          <div class="rank-row"><span class="rank-no">5</span><span class="rank-name">春灯照旧人<small>古装甜宠 · 已完结</small></span><span class="rank-val">8.5</span></div>
+          <div class="rank-row"><span class="rank-no">6</span><span class="rank-name">老屋三分地<small>家庭伦理 · 已完结</small></span><span class="rank-val">8.4</span></div>
+          <div class="rank-row"><span class="rank-no">7</span><span class="rank-name">长夜执灯人<small>年代情感 · 在更第 12 集</small></span><span class="rank-val">8.3</span></div>
+          <div class="rank-row"><span class="rank-no">8</span><span class="rank-name">我靠读档通关宅斗<small>玄幻穿书 · 在更第 41 集</small></span><span class="rank-val">8.0</span></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 右辅助栏 -->
+  <aside class="side-col" aria-label="辅助信息">
+    <div class="side-card">
+      <h2>今日更新节奏</h2>
+      <ul class="side-timeline">
+        <li><time>09:30</time><b>长夜执灯人</b><span>第 12 集 · 改制方案公开</span></li>
+        <li><time>08:10</time><b>重返十八岁的董事会</b><span>第 24 集 · 二轮谈判</span></li>
+        <li><time>00:05</time><b>第七通电话</b><span>第 9 集 · 第二个人声</span></li>
+        <li><time>20:00</time><b>春风不识旧时人</b><span>首播 · 前 6 集连更</span></li>
+      </ul>
+    </div>
+    <div class="side-card">
+      <h2>类型快捷入口</h2>
+      <div class="side-links">
+        <a href="/#fenlei">都市逆袭 <em>62</em></a>
+        <a href="/#fenlei">古装甜宠 <em>48</em></a>
+        <a href="/#fenlei">悬疑反转 <em>37</em></a>
+        <a href="/#fenlei">年代情感 <em>29</em></a>
+        <a href="/#fenlei">职场商战 <em>24</em></a>
+        <a href="/#fenlei">玄幻穿书 <em>17</em></a>
+      </div>
+      <p class="side-note">单集 1—3 分钟，常见总集数 70—120 集。已完结条目适合一次看完。</p>
+    </div>
+    <div class="side-card">
+      <h2>判断要点</h2>
+      <div class="side-links">
+        <a href="/#jiedu">第 10 集解决冲突的方式 <em>解析</em></a>
+        <a href="/#jiedu">感情线有没有中间层 <em>解析</em></a>
+        <a href="/#jiedu">伏笔是否逐条回收 <em>解析</em></a>
+        <a href="/#zhinan">更新节奏是否稳定 <em>路径</em></a>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">
+        <svg width="34" height="34" viewBox="0 0 64 64" role="img" aria-hidden="true">
+          <rect width="64" height="64" rx="15" fill="#332f45"/>
+          <path d="M16 19h22a9 9 0 0 1 9 9v17H25a9 9 0 0 1-9-9z" fill="#e2503f"/>
+          <path d="M27 27l14 7-14 7z" fill="#fff3e8"/>
+          <circle cx="47" cy="18" r="5" fill="#1f7a6b"/>
+        </svg>
+        <span class="brand-text">91短剧<span>网页版</span></span>
+      </div>
+      <p class="footer-desc">聚合竖屏短剧的类型条目、分集更新与挑选依据，覆盖都市逆袭、古装甜宠、悬疑反转、年代情感等方向。</p>
+    </div>
+    <div class="footer-col">
+      <h3>类型频道</h3>
+      <ul>
+        <li><a href="/#fenlei">都市逆袭</a></li>
+        <li><a href="/#fenlei">古装甜宠</a></li>
+        <li><a href="/#fenlei">悬疑反转</a></li>
+        <li><a href="/#fenlei">年代情感</a></li>
+        <li><a href="/#fenlei">职场商战</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>内容栏目</h3>
+      <ul>
+        <li><a href="/#gaishu">领域概览</a></li>
+        <li><a href="/#jingxuan">精选条目</a></li>
+        <li><a href="/#gengxin">更新动态</a></li>
+        <li><a href="/#jiedu">深度解析</a></li>
+        <li><a href="/#bangdan">热度榜单</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h3>辅助</h3>
+      <ul>
+        <li><a href="/#zhinan">观看路径</a></li>
+        <li><a href="/#faq">常见问题</a></li>
+        <li><a href="/#pinglun">观众评论</a></li>
+        <li><a href="/#zixun">相关资讯</a></li>
+        <li><a href="/#tuijian">推荐方向</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 91短剧网页版 · 内容聚合展示</span>
+    <span class="demo">部分内容为示例数据，仅用于展示页面结构</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var input = document.getElementById('siteSearch');
+  var btn = document.getElementById('searchBtn');
+  var grid = document.getElementById('pickGrid');
+  var empty = document.getElementById('pickNoResult');
+  if(!input || !grid) return;
+  var cards = Array.prototype.slice.call(grid.querySelectorAll('.pick-card'));
+
+  function filter(){
+    var q = (input.value || '').trim().toLowerCase();
+    if(!q){
+      cards.forEach(function(c){ c.style.display = ''; });
+      empty.style.display = 'none';
+      return;
+    }
+    var hit = 0;
+    cards.forEach(function(c){
+      var text = (c.getAttribute('data-keywords') || '') + ' ' + c.textContent;
+      var ok = text.toLowerCase().indexOf(q) > -1;
+      c.style.display = ok ? '' : 'none';
+      if(ok) hit++;
+    });
+    empty.style.display = hit ? 'none' : 'block';
+  }
+
+  input.addEventListener('input', filter);
+  input.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){ e.preventDefault(); filter(); }
+  });
+  if(btn) btn.addEventListener('click', function(){
+    filter();
+    document.getElementById('jingxuan').scrollIntoView({behavior:'smooth', block:'start'});
+  });
+})();
+</script>
+
+</body>
+              </html>
